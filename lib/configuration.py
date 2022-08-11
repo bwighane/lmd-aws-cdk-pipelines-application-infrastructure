@@ -17,8 +17,8 @@ GITHUB_REPOSITORY_OWNER_NAME = 'BranfordTGbieor'
 GITHUB_REPOSITORY_NAME = 'aws-cdk-pipelines-datalake-infrastructure'
 ACCOUNT_ID = '829553079673'
 REGION = 'us-east-1'
-LOGICAL_ID_PREFIX = 'DataLakeCDKLMD'
-RESOURCE_NAME_PREFIX = 'lmd'
+LOGICAL_ID_PREFIX = 'LMDCDKDataLake'
+RESOURCE_NAME_PREFIX = 'lmd-v2'
 VPC_CIDR = '10.20.0.0/24'
 
 # Secrets Manager Inputs
@@ -62,11 +62,11 @@ def get_local_configuration(environment: str) -> dict:
             # Use your forked repo here!
             # This is used in the Logical Id of CloudFormation resources
             # We recommend capital case for consistency. e.g. DataLakeCdkBlog
-            LOGICAL_ID_PREFIX: 'DataLakeCDKLMD',
+            LOGICAL_ID_PREFIX: 'LMDCDKDataLake',
             # This is used in resources that must be globally unique!
             # It may only contain alphanumeric characters, hyphens, and cannot contain trailing hyphens
             # E.g. unique-identifier-data-lake
-            RESOURCE_NAME_PREFIX: 'lmd',
+            RESOURCE_NAME_PREFIX: 'lmd-v2',
         },
         DEV: {
             ACCOUNT_ID: '002190277880',
@@ -123,8 +123,8 @@ def get_environment_configuration(environment: str) -> dict:
         S3_KMS_KEY: f'{environment}S3KmsKeyArn',
         S3_ACCESS_LOG_BUCKET: f'{environment}S3AccessLogBucket',
         S3_RAW_BUCKET: f'{environment}RawBucketName',
-        S3_CONFORMED_BUCKET: f'{environment}ConformedBucketName',
-        S3_PURPOSE_BUILT_BUCKET: f'{environment}PurposeBuiltBucketName',
+        S3_CONFORMED_BUCKET: f'{environment}StagingBucketName',
+        S3_PURPOSE_BUILT_BUCKET: f'{environment}CuratedBucketName',
     }
 
     return {**cloudformation_output_mapping, **get_local_configuration(environment)}
