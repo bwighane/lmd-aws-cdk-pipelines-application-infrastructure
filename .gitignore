@@ -15,3 +15,8 @@ __pycache__
 cdk.out
 .idea/
 cdk.context.json
+
+# venv
+
+lib/python3.11
+values.txt
