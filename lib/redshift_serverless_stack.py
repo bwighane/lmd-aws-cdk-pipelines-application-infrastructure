@@ -17,7 +17,7 @@ class RedshiftServerlessStack(cdk.Stack):
             "namespace_name": namespace_name,
             "admin_username": "master",
             "admin_user_password": "xuL9cMx09#iE",
-            "db_name": "lmh",
+            "db_name": "liberia",
             "default_iam_role_arn": "arn:aws:iam::002190277880:role/service-role/AmazonRedshift-CommandsAccessRole-20221018T164627",
             "log_exports": ["useractivitylog"],
             "tags": [{"key": "type", "value": "lmh-2"}],
