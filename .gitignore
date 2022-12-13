@@ -20,3 +20,5 @@ cdk.context.json
 
 lib/python3.11
 values.txt
+bin/
+pyvenv.cfg

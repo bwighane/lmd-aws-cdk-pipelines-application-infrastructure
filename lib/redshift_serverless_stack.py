@@ -16,12 +16,12 @@ class RedshiftServerlessStack(cdk.Stack):
         namespace_configuration = {
             "namespace_name": namespace_name,
             "admin_username": "master",
-            "admin_user_password": "xxx",
+            "admin_user_password": "xuL9cMx09#iE",
             "db_name": "lmh",
-            "default_iam_role_arn": "xxx",
+            "default_iam_role_arn": "arn:aws:iam::002190277880:role/service-role/AmazonRedshift-CommandsAccessRole-20221018T164627",
             "log_exports": ["useractivitylog"],
             "tags": [{"key": "type", "value": "lmh-20"}],
-            "iam_roles": ["xxx"]
+            "iam_roles": ["arn:aws:iam::002190277880:role/service-role/AmazonRedshift-CommandsAccessRole-20221018T164627"]
         }
 
         workgroup_configuration = {
