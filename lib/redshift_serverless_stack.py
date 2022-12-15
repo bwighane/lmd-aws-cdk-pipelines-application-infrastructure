@@ -20,7 +20,7 @@ class RedshiftServerlessStack(cdk.Stack):
             "db_name": "liberia",
             "default_iam_role_arn": "arn:aws:iam::002190277880:role/service-role/AmazonRedshift-CommandsAccessRole-20221018T164627",
             "log_exports": ["useractivitylog"],
-            "tags": [{"key": "type", "value": "lmh-2"}],
+            "tags": [{"key": "type", "value": "lmd-2"}],
             "iam_roles": ["arn:aws:iam::002190277880:role/service-role/AmazonRedshift-CommandsAccessRole-20221018T164627"]
         }
 
@@ -28,7 +28,7 @@ class RedshiftServerlessStack(cdk.Stack):
             "namespace_name": namespace_name,
             "workgroup_name": workgroup_name,
             "publicly_accessible": False,
-            "tags": [{"key": "type", "value": "lmh-2"}, ]
+            "tags": [{"key": "type", "value": "lmd-2"}, ]
         }
         redshift_sls_namespace = redshiftserverless.CfnNamespace(
             self, "namespaceid", **namespace_configuration)
