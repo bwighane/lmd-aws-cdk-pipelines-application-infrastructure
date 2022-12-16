@@ -45,7 +45,7 @@ class PipelineDeployStage(cdk.Stage):
         )
 
         redshift_stack = RedshiftServerlessStack(
-            scope,
+            self,
             f'{target_environment}{logical_id_prefix}InfrastructureRedshiftServerless',
             **kwargs,
         )
