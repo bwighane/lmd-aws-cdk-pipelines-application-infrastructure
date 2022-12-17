@@ -6,7 +6,8 @@ from .vpc_stack import VpcStack
 from .s3_bucket_zones_stack import S3BucketZonesStack
 from .tagging import tag
 from .configuration import get_logical_id_prefix
-from .redshift_serverless_stack import RedshiftServerlessStack
+from .redshift_serverless_namespace_stack import RedshiftServerlessNamespaceStack
+from .redshift_serverless_workgroup_stack import RedshiftServerlessWorkgroupStack
 
 
 class PipelineDeployStage(cdk.Stage):
@@ -44,12 +45,18 @@ class PipelineDeployStage(cdk.Stage):
             **kwargs,
         )
 
-        redshift_stack = RedshiftServerlessStack(
+        redshift_namespace_stack = RedshiftServerlessNamespaceStack(
             self,
-            f'{target_environment}{logical_id_prefix}InfrastructureRedshiftServerless',
+            f'{target_environment}{logical_id_prefix}InfrastructureRedshiftServerlessNamespace',
+            **kwargs,
+        )
+        redshift_workgroup_stack = RedshiftServerlessWorkgroupStack(
+            self,
+            f'{target_environment}{logical_id_prefix}InfrastructureRedshiftServerlessWorkgroup',
             **kwargs,
         )
 
         tag(vpc_stack, target_environment)
         tag(bucket_stack, target_environment)
-        tag(redshift_stack, target_environment)
+        tag(redshift_namespace_stack, target_environment)
+        tag(redshift_workgroup_stack, target_environment)
