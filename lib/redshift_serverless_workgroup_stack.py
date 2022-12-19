@@ -11,8 +11,8 @@ class RedshiftServerlessWorkgroupStack(cdk.Stack):
     def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        namespace_name = "lmd-2"
-        workgroup_name = "lmd-2"
+        namespace_name = "lmd"
+        workgroup_name = "lmd"
 
         workgroup_configuration = {
             "namespace_name": namespace_name,
