@@ -22,7 +22,7 @@ class RedshiftServerlessWorkgroupStack(cdk.Stack):
         }
         redshift_namespace_stack = RedshiftServerlessNamespaceStack(
             self,
-            f'rslsnspace',
+            f'slsnspace',
             **kwargs,
         )
         self.add_dependency(redshift_namespace_stack)
