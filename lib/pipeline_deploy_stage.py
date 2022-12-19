@@ -45,11 +45,6 @@ class PipelineDeployStage(cdk.Stage):
             **kwargs,
         )
 
-        redshift_namespace_stack = RedshiftServerlessNamespaceStack(
-            self,
-            f'{target_environment}{logical_id_prefix}InfrastructureRedshiftServerlessNamespace',
-            **kwargs,
-        )
         redshift_workgroup_stack = RedshiftServerlessWorkgroupStack(
             self,
             f'{target_environment}{logical_id_prefix}InfrastructureRedshiftServerlessWorkgroup',
@@ -58,5 +53,4 @@ class PipelineDeployStage(cdk.Stage):
 
         tag(vpc_stack, target_environment)
         tag(bucket_stack, target_environment)
-        tag(redshift_namespace_stack, target_environment)
         tag(redshift_workgroup_stack, target_environment)
