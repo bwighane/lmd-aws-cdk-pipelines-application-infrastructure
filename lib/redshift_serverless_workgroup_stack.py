@@ -17,7 +17,7 @@ class RedshiftServerlessWorkgroupStack(cdk.Stack):
         workgroup_configuration = {
             "namespace_name": namespace_name,
             "workgroup_name": workgroup_name,
-            "publicly_accessible": False,
+            "publicly_accessible": True,
             "tags": [{"key": "type", "value": "lmd-2"}, ]
         }
         redshift_namespace_stack = RedshiftServerlessNamespaceStack(
