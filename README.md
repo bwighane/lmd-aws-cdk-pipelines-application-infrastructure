@@ -15,30 +15,30 @@ This solution helps you:
 
 ## Contents
 
-* [Data lake](#data-lake)
-  * [Architecture](#architecture)
-  * [Infrastructure](#infrastructure)
-* [The solution](#the-solution)
-  * [Centralized deployment](#centralized-deployment)
-  * [Continuous delivery of data lake infrastructure](#continuos-delivery-of-data-lake-etl-using-cdk-pipelines)
-  * [Source code structure](#source-code-structure)
-  * [Automation scripts](#automation-scripts)
-* [Prerequisites](#prerequisites)
-  * [Software installation](#software-installation)
-  * [Logistical requirements](#logistical-requirements)
-  * [AWS environment bootstrapping](#aws-environment-bootstrapping)
-  * [Application configuration](#application-configuration)
-  * [AWS CodePipeline and GitHub integration](#aws-codepipeline-and-github-integration)
-* [Deployment](#deployment)
-  * [Deploying for the first time](#deploying-for-the-first-time)
-  * [Iterative Deployment](#iterative-deployment)
-* [Data lake ETL jobs](#data-lake-etl-jobs)
-* [Additional resources](#additional-resources)
-  * [Clean up](#clean-up)
-  * [AWS CDK](#aws-cdk)
-  * [Developer guide](#developer-guide)
-* [Authors and reviewers](#authors-and-reviewers)
-* [License Summary](#license-summary)
+-   [Data lake](#data-lake)
+    -   [Architecture](#architecture)
+    -   [Infrastructure](#infrastructure)
+-   [The solution](#the-solution)
+    -   [Centralized deployment](#centralized-deployment)
+    -   [Continuous delivery of data lake infrastructure](#continuos-delivery-of-data-lake-etl-using-cdk-pipelines)
+    -   [Source code structure](#source-code-structure)
+    -   [Automation scripts](#automation-scripts)
+-   [Prerequisites](#prerequisites)
+    -   [Software installation](#software-installation)
+    -   [Logistical requirements](#logistical-requirements)
+    -   [AWS environment bootstrapping](#aws-environment-bootstrapping)
+    -   [Application configuration](#application-configuration)
+    -   [AWS CodePipeline and GitHub integration](#aws-codepipeline-and-github-integration)
+-   [Deployment](#deployment)
+    -   [Deploying for the first time](#deploying-for-the-first-time)
+    -   [Iterative Deployment](#iterative-deployment)
+-   [Data lake ETL jobs](#data-lake-etl-jobs)
+-   [Additional resources](#additional-resources)
+    -   [Clean up](#clean-up)
+    -   [AWS CDK](#aws-cdk)
+    -   [Developer guide](#developer-guide)
+-   [Authors and reviewers](#authors-and-reviewers)
+-   [License Summary](#license-summary)
 
 ---
 
@@ -66,16 +66,16 @@ We use AWS Glue for ETL and data cataloging, Amazon Athena for interactive queri
 
 Now we have the Data Lake design, let's deploy its infrastructure. It includes the following resources:
 
- 1. Amazon Virtual Private Cloud (VPC)
- 1. Subnets
- 1. Security Groups
- 1. Route Table(s)
- 1. VPC Endpoints
- 1. Amazon S3 buckets for:
+1.  Amazon Virtual Private Cloud (VPC)
+1.  Subnets
+1.  Security Groups
+1.  Route Table(s)
+1.  VPC Endpoints
+1.  Amazon S3 buckets for:
     1. raw data
     1. conformed data
     1. purpose-built
- 1. Amazon DynamoDB table for ETL jobs auditing
+1.  Amazon DynamoDB table for ETL jobs auditing
 
 Figure below represents the infrastructure resources we provision for Data Lake.
 
@@ -93,10 +93,10 @@ We use a centralized deployment model to deploy data lake infrastructure across 
 
 To demonstrate this solution, we need 4 AWS accounts as follows:
 
-  1. Central deployment account to create CDK pipelines
-  1. Dev account for dev data lake
-  1. Test account for test data lake
-  1. Prod account for production data lake
+1. Central deployment account to create CDK pipelines
+1. Dev account for dev data lake
+1. Test account for test data lake
+1. Prod account for production data lake
 
 Figure below represents the centralized deployment model.
 
@@ -104,11 +104,11 @@ Figure below represents the centralized deployment model.
 
 There are few interesting details to point out here:
 
-  1. **Data Lake infrastructure source code** is organized into three branches - dev, test, and production
-  1. Each branch is mapped to a CDK pipeline and it turn mapped to a target environment. This way, code changes made to the branches are deployed iteratively to their respective target environment
-  1. From CDK perspective, we apply the the following bootstrapping principles
-      1. the central deployment account will utilize a standard bootstrap
-      1. each target account will require a cross account trust policy to allow access from the centralized deployment account
+1. **Data Lake infrastructure source code** is organized into three branches - dev, test, and production
+1. Each branch is mapped to a CDK pipeline and it turn mapped to a target environment. This way, code changes made to the branches are deployed iteratively to their respective target environment
+1. From CDK perspective, we apply the the following bootstrapping principles
+    1. the central deployment account will utilize a standard bootstrap
+    1. each target account will require a cross account trust policy to allow access from the centralized deployment account
 
 ---
 
@@ -131,15 +131,15 @@ There are few interesting details to point out here:
 
 Table below explains how this source ode structured:
 
-  | File / Folder    | Description  |
-  |------------------| -------------|
-  | [app.py](./app.py) | Application entry point. |
-  | [pipeline_stack.py](./lib/pipeline_stack.py) | Pipeline stack entry point. |
-  | [pipeline_deploy_stage.py](./lib/pipeline_deploy_stage.py) | Pipeline deploy stage entry point. |
-  | [s3_bucket_zones_stack.py](./lib/s3_bucket_zones_stack.py) | Stack creates S3 buckets - raw, conformed, and purpose-built. This also creates an S3 bucket for server access logging and AWS KMS Key to enabled server side encryption for all buckets.|
-  | [tagging.py](./lib/tagging.py) | Program to tag all provisioned resources. |
-  | [vpc_stack.py](./lib/vpc_stack.py) | Contains all resources related to the VPC used by Data Lake infrastructure and services. This includes: VPC, Security Groups, and VPC Endpoints (both Gateway and Interface types). |
-  | resources| This folder has static resources such as architecture diagrams, developer guide etc. |
+| File / Folder                                              | Description                                                                                                                                                                               |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [app.py](./app.py)                                         | Application entry point.                                                                                                                                                                  |
+| [pipeline_stack.py](./lib/pipeline_stack.py)               | Pipeline stack entry point.                                                                                                                                                               |
+| [pipeline_deploy_stage.py](./lib/pipeline_deploy_stage.py) | Pipeline deploy stage entry point.                                                                                                                                                        |
+| [s3_bucket_zones_stack.py](./lib/s3_bucket_zones_stack.py) | Stack creates S3 buckets - raw, conformed, and purpose-built. This also creates an S3 bucket for server access logging and AWS KMS Key to enabled server side encryption for all buckets. |
+| [tagging.py](./lib/tagging.py)                             | Program to tag all provisioned resources.                                                                                                                                                 |
+| [vpc_stack.py](./lib/vpc_stack.py)                         | Contains all resources related to the VPC used by Data Lake infrastructure and services. This includes: VPC, Security Groups, and VPC Endpoints (both Gateway and Interface types).       |
+| resources                                                  | This folder has static resources such as architecture diagrams, developer guide etc.                                                                                                      |
 
 ---
 
@@ -147,11 +147,11 @@ Table below explains how this source ode structured:
 
 This repository has the following automation scripts to complete steps before the deployment:
 
-  | # | Script    | Purpose  |
-  | --|-----------| -------------|
-  | 1 | [bootstrap_deployment_account.sh](./lib/prerequisites/bootstrap_deployment_account.sh) | Used to bootstrap deployment account |
-  | 2 | [bootstrap_target_account.sh](./lib/prerequisites/bootstrap_target_account.sh) | Used to bootstrap target environments for example dev, test, and production. |
-  | 3 | [configure_account_secrets.py](./lib/prerequisites/configure_account_secrets.py) | Used to configure account secrets for e.g. GitHub access token. |
+| #   | Script                                                                                 | Purpose                                                                      |
+| --- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| 1   | [bootstrap_deployment_account.sh](./lib/prerequisites/bootstrap_deployment_account.sh) | Used to bootstrap deployment account                                         |
+| 2   | [bootstrap_target_account.sh](./lib/prerequisites/bootstrap_target_account.sh)         | Used to bootstrap target environments for example dev, test, and production. |
+| 3   | [configure_account_secrets.py](./lib/prerequisites/configure_account_secrets.py)       | Used to configure account secrets for e.g. GitHub access token.              |
 
 ---
 
@@ -167,9 +167,9 @@ This section has various steps you need to perform before you deploy data lake r
 
 1. **AWS CDK** - install compatible AWS CDK version
 
-   ```bash
-   npm install -g aws-cdk@1.109.0
-   ```
+    ```bash
+    npm install -g aws-cdk@1.109.0
+    ```
 
 1. **Python** - make sure you have Python SDK installed on your system. We recommend Python 3.7 and above.
 
@@ -191,15 +191,15 @@ This section has various steps you need to perform before you deploy data lake r
 
 Environment bootstrap is standard CDK process to prepare an AWS environment ready for deployment. Follow the steps:
 
- 1. Go to project root directory where [app.py](app.py) file exists
+1.  Go to project root directory where [app.py](app.py) file exists
 
- 1. Create Python virtual environment. This is a one-time activity.
+1.  Create Python virtual environment. This is a one-time activity.
 
     ```bash
     python3 -m venv .venv
     ```
 
- 1. Expected output: you will see a folder with name **.venv** created in project root folder. You can run the following command to see its contents ```ls -lart .venv/```
+1.  Expected output: you will see a folder with name **.venv** created in project root folder. You can run the following command to see its contents `ls -lart .venv/`
 
     ```bash
     total 8
@@ -211,48 +211,49 @@ Environment bootstrap is standard CDK process to prepare an AWS environment read
     drwxr-xr-x  21 user_id  staff  672 Jun 23 15:28 ..
     ```
 
- 1. Activate Python virtual environment
+1.  Activate Python virtual environment
 
     ```bash
     source .venv/bin/activate
     ```
 
- 1. Install dependencies
+1.  Install dependencies
 
     ```bash
     pip install -r requirements.txt
     ```
 
- 1. Expected output: run the below command and verify all dependencies are installed
+1.  Expected output: run the below command and verify all dependencies are installed
 
     ```bash
     ls -lart .venv/lib/python3.9/site-packages/
     ```
 
- 1. Enable execute permissions for scripts
+1.  Enable execute permissions for scripts
 
     ```bash
     chmod 700 ./lib/prerequisites/bootstrap_deployment_account.sh
     chmod 700 ./lib/prerequisites/bootstrap_target_account.sh
     ```
 
- 1. Before you bootstrap **central deployment account** account, set environment variable
+1.  Before you bootstrap **central deployment account** account, set environment variable
 
     ```bash
     export AWS_PROFILE=replace_it_with_deployment_account_profile_name_b4_running
     ```
 
     **Important**:
+
     1. This command is based on the feature [Named Profiles](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html).
     1. If you want to use an alternative option then refer to [Configuring the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) and [Environment variables to configure the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) for details. Be sure to follow those steps for each configuration step moving forward.
 
- 1. Bootstrap central deployment account
+1.  Bootstrap central deployment account
 
     ```bash
     ./lib/prerequisites/bootstrap_deployment_account.sh
     ```
 
- 1. When you see the following text, enter **y**, and press enter/return
+1.  When you see the following text, enter **y**, and press enter/return
 
     ```bash
     Are you sure you want to bootstrap {
@@ -262,29 +263,30 @@ Environment bootstrap is standard CDK process to prepare an AWS environment read
     }? (y/n)y
     ```
 
- 1. Expected outputs:
-    1. In your terminal, you see ✅  Environment aws://deployment_account_id/us-east-2 bootstrapped.
+1.  Expected outputs:
+
+    1. In your terminal, you see ✅ Environment aws://deployment_account_id/us-east-2 bootstrapped.
 
     1. You see a stack created in your deployment account as follows
 
-       ![bootstrap_central_deployment_account](./resources/bootstrap_central_deployment_account_exp_output.png)
+        ![bootstrap_central_deployment_account](./resources/bootstrap_central_deployment_account_exp_output.png)
 
-    1. You see an S3 bucket created in central deployment account. The name is like ```cdk-hnb659fds-<assets-deployment_account_id>-us-east-2```
+    1. You see an S3 bucket created in central deployment account. The name is like `cdk-hnb659fds-<assets-deployment_account_id>-us-east-2`
 
- 1. Before you bootstrap **dev** account, set environment variable
+1.  Before you bootstrap **dev** account, set environment variable
 
     ```bash
     export AWS_PROFILE=replace_it_with_dev_account_profile_name_b4_running
     ```
 
- 1. Bootstrap **dev** account
+1.  Bootstrap **dev** account
 
-    **Important:** Your configured environment *must* target the Dev account
+    **Important:** Your configured environment _must_ target the Dev account
 
     ```bash
     ./lib/prerequisites/bootstrap_target_account.sh <central_deployment_account_id> arn:aws:iam::aws:policy/AdministratorAccess
     ```
-  
+
     When you see the following text, enter **y**, and press enter/return
 
     ```bash
@@ -295,24 +297,25 @@ Environment bootstrap is standard CDK process to prepare an AWS environment read
     } providing a trust relationship to: deployment_account_id using policy arn:aws:iam::aws:policy/AdministratorAccess? (y/n)
     ```
 
- 1. Expected outputs:
-    1. In your terminal, you see ✅  Environment aws://dev_account_id/us-east-2 bootstrapped.
+1.  Expected outputs:
+
+    1. In your terminal, you see ✅ Environment aws://dev_account_id/us-east-2 bootstrapped.
 
     1. You see a stack created in your deployment account as follows
 
-       ![bootstrap_central_deployment_account](./resources/bootstrap_central_deployment_account_exp_output.png)
+        ![bootstrap_central_deployment_account](./resources/bootstrap_central_deployment_account_exp_output.png)
 
-    1. You see an S3 bucket created in central deployment account. The name is like ```cdk-hnb659fds-assets-<dev_account_id>-us-east-2```
+    1. You see an S3 bucket created in central deployment account. The name is like `cdk-hnb659fds-assets-<dev_account_id>-us-east-2`
 
- 1. Before you bootstrap **test** account, set environment variable
+1.  Before you bootstrap **test** account, set environment variable
 
     ```bash
     export AWS_PROFILE=replace_it_with_test_account_profile_name_b4_running
     ```
 
- 1. Bootstrap test account
+1.  Bootstrap test account
 
-    **Important:** Your configured environment *must* target the Test account
+    **Important:** Your configured environment _must_ target the Test account
 
     ```bash
     ./lib/prerequisites/bootstrap_target_account.sh <central_deployment_account_id> arn:aws:iam::aws:policy/AdministratorAccess
@@ -328,24 +331,25 @@ Environment bootstrap is standard CDK process to prepare an AWS environment read
     } providing a trust relationship to: deployment_account_id using policy arn:aws:iam::aws:policy/AdministratorAccess? (y/n)
     ```
 
- 1. Expected outputs:
-    1. In your terminal, you see ✅  Environment aws://test_account_id/us-east-2 bootstrapped.
+1.  Expected outputs:
+
+    1. In your terminal, you see ✅ Environment aws://test_account_id/us-east-2 bootstrapped.
 
     1. You see a stack created in your Deployment account as follows
 
         ![bootstrap_central_deployment_account](./resources/bootstrap_central_deployment_account_exp_output.png)
 
-    1. You see an S3 bucket created in central deployment account. The name is like ```cdk-hnb659fds-assets-<test_account_id>-us-east-2```
+    1. You see an S3 bucket created in central deployment account. The name is like `cdk-hnb659fds-assets-<test_account_id>-us-east-2`
 
- 1. Before you bootstrap **prod** account, set environment variable
+1.  Before you bootstrap **prod** account, set environment variable
 
     ```bash
     export AWS_PROFILE=replace_it_with_prod_account_profile_name_b4_running
     ```
 
- 1. Bootstrap Prod account
+1.  Bootstrap Prod account
 
-    **Important:** Your configured environment *must* target the Prod account
+    **Important:** Your configured environment _must_ target the Prod account
 
     ```bash
     ./lib/prerequisites/bootstrap_target_account.sh <central_deployment_account_id> arn:aws:iam::aws:policy/AdministratorAccess
@@ -361,14 +365,15 @@ Environment bootstrap is standard CDK process to prepare an AWS environment read
     } providing a trust relationship to: deployment_account_id using policy arn:aws:iam::aws:policy/AdministratorAccess? (y/n)
     ```
 
- 1. Expected outputs:
-    1. In your terminal, you see ✅  Environment aws://prod_account_id/us-east-2 bootstrapped.
+1.  Expected outputs:
+
+    1. In your terminal, you see ✅ Environment aws://prod_account_id/us-east-2 bootstrapped.
 
     1. You see a stack created in your Deployment account as follows
 
         ![bootstrap_central_deployment_account](./resources/bootstrap_central_deployment_account_exp_output.png)
 
-    1. You see an S3 bucket created in central deployment account. The name is like ```cdk-hnb659fds-assets-<prod_account_id>-us-east-2```
+    1. You see an S3 bucket created in central deployment account. The name is like `cdk-hnb659fds-assets-<prod_account_id>-us-east-2`
 
 ---
 
@@ -452,8 +457,8 @@ Integration between AWS CodePipeline and GitHub requires a personal access token
 Configure your AWS profile to target the central Deployment account as an Administrator and perform the following steps:
 
 1. Open command line (terminal)
-1. Go to project root directory where ```cdk.json``` and ```app.py``` exist
-1. Run the command ```cdk ls```
+1. Go to project root directory where `cdk.json` and `app.py` exist
+1. Run the command `cdk ls`
 1. Expected output: It lists CDK Pipelines and target account stacks on the console. A sample is below:
 
     ```bash
@@ -472,8 +477,9 @@ Configure your AWS profile to target the central Deployment account as an Admini
     ```
 
     **Note:**
-     1. Here, **DataLakeCDKBlog** string literal is the value of ```LOGICAL_ID_PREFIX``` configured in [configuration.py](./lib/configuration.py)
-     1. The first three stacks represent the CDK Pipeline stacks which will be created in the deployment account. For each, target environment, there will be three stacks.
+
+    1. Here, **DataLakeCDKBlog** string literal is the value of `LOGICAL_ID_PREFIX` configured in [configuration.py](./lib/configuration.py)
+    1. The first three stacks represent the CDK Pipeline stacks which will be created in the deployment account. For each, target environment, there will be three stacks.
 
 1. Set your environment variable back to deployment account
 
@@ -481,21 +487,21 @@ Configure your AWS profile to target the central Deployment account as an Admini
     export AWS_PROFILE=deployment_account_profile_name_here
     ```
 
-1. Run the command ```cdk deploy --all```
+1. Run the command `cdk deploy --all`
 
 1. Expected outputs:
 
-   1. In the deployment account's CloudFormation console, you will see the following CloudFormation stacks created
+    1. In the deployment account's CloudFormation console, you will see the following CloudFormation stacks created
 
-      ![CloudFormation_stacks_in_deployment_account](./resources/cdk_deploy_output_deployment_account.png)
+        ![CloudFormation_stacks_in_deployment_account](./resources/cdk_deploy_output_deployment_account.png)
 
-   1. In the deployment account's CodePipeline console, you will see the following Pipeline triggered
+    1. In the deployment account's CodePipeline console, you will see the following Pipeline triggered
 
-      ![CloudFormation_stacks_in_deployment_account](./resources/dev_codepipeline_in_deployment_account.png)
+        ![CloudFormation_stacks_in_deployment_account](./resources/dev_codepipeline_in_deployment_account.png)
 
-   1. In the dev data lake account's CloudFormation console, you will see the following stacks are completed successfully
+    1. In the dev data lake account's CloudFormation console, you will see the following stacks are completed successfully
 
-      ![cdk_deploy_output_deployment_account_cfn_stacks](./resources/cdk_deploy_output_deployment_account_cfn_stacks.png)
+        ![cdk_deploy_output_deployment_account_cfn_stacks](./resources/cdk_deploy_output_deployment_account_cfn_stacks.png)
 
 ---
 
@@ -507,7 +513,7 @@ Pipeline you have created using CDK Pipelines module is self mutating. That mean
 
 ## Data lake ETL jobs
 
-You can use the data lake infrastructure to deploy ETL jobs. We provided [AWS CDK Pipelines for Data Lake ETL Deployment](https://github.com/aws-samples/aws-cdk-pipelines-datalake-etl) to 
+You can use the data lake infrastructure to deploy ETL jobs. We provided [AWS CDK Pipelines for Data Lake ETL Deployment](https://github.com/aws-samples/aws-cdk-pipelines-datalake-etl) to
 help you accomplish this task.
 
 ---
@@ -520,46 +526,49 @@ In this section, we provide some additional resources.
 
 ### Clean up
 
-1. Delete stacks using the command ```cdk destroy --all```. When you see the following text, enter **y**, and press enter/return.
+1. Delete stacks using the command `cdk destroy --all`. When you see the following text, enter **y**, and press enter/return.
 
-   ```bash
-   Are you sure you want to delete: TestDataLakeCDKBlogInfrastructurePipeline, ProdDataLakeCDKBlogInfrastructurePipeline, DevDataLakeCDKBlogInfrastructurePipeline (y/n)?
-   ```
+    ```bash
+    Are you sure you want to delete: TestDataLakeCDKBlogInfrastructurePipeline, ProdDataLakeCDKBlogInfrastructurePipeline, DevDataLakeCDKBlogInfrastructurePipeline (y/n)?
+    ```
 
-   Note: This operation deletes stacks only in central deployment account
+    Note: This operation deletes stacks only in central deployment account
 
 1. To delete stacks in **development** account, log onto Dev account, go to AWS CloudFormation console and delete the following stacks:
 
-   1. Dev-DevDataLakeCDKBlogInfrastructureVpc
-   1. Dev-DevDataLakeCDKBlogInfrastructureS3BucketZones
-   1. Dev-DevDataLakeCDKBlogInfrastructureIam
+    1. Dev-DevDataLakeCDKBlogInfrastructureVpc
+    1. Dev-DevDataLakeCDKBlogInfrastructureS3BucketZones
+    1. Dev-DevDataLakeCDKBlogInfrastructureIam
 
-   **Note:**
+    **Note:**
+
     1. Deletion of **Dev-DevDataLakeCDKBlogInfrastructureS3BucketZones** will delete the S3 buckets (raw, conformed, and purpose-built). This behavior can be changed by modifying the retention policy in [s3_bucket_zones_stack.py](lib/s3_bucket_zones_stack.py#L38)
 
 1. To delete stacks in **test** account, log onto Dev account, go to AWS CloudFormation console and delete the following stacks:
 
-   1. Test-TestDataLakeCDKBlogInfrastructureVpc
-   1. Test-TestDataLakeCDKBlogInfrastructureS3BucketZones
-   1. Test-TestDataLakeCDKBlogInfrastructureIam
+    1. Test-TestDataLakeCDKBlogInfrastructureVpc
+    1. Test-TestDataLakeCDKBlogInfrastructureS3BucketZones
+    1. Test-TestDataLakeCDKBlogInfrastructureIam
 
-   **Note:**
-      1. The S3 buckets (raw, conformed, and purpose-built) have retention policies attached and must be removed manually when they are no longer needed.
+    **Note:**
+
+    1. The S3 buckets (raw, conformed, and purpose-built) have retention policies attached and must be removed manually when they are no longer needed.
 
 1. To delete stacks in **prod** account, log onto Dev account, go to AWS CloudFormation console and delete the following stacks:
 
-   1. Prod-ProdDataLakeCDKBlogInfrastructureVpc
-   1. Prod-ProdDataLakeCDKBlogInfrastructureS3BucketZones
-   1. Prod-ProdDataLakeCDKBlogInfrastructureIam
+    1. Prod-ProdDataLakeCDKBlogInfrastructureVpc
+    1. Prod-ProdDataLakeCDKBlogInfrastructureS3BucketZones
+    1. Prod-ProdDataLakeCDKBlogInfrastructureIam
 
-   **Note:**
-      1. The S3 buckets (raw, conformed, and purpose-built) have retention policies attached and must be removed manually when they are no longer needed.
+    **Note:**
+
+    1. The S3 buckets (raw, conformed, and purpose-built) have retention policies attached and must be removed manually when they are no longer needed.
 
 1. **Optional:**
 
-   1. If you are not using AWS CDK for other purposes, you can also remove ```CDKToolkit``` stack in each target account.
+    1. If you are not using AWS CDK for other purposes, you can also remove `CDKToolkit` stack in each target account.
 
-   1. Note: The asset S3 bucket has a retention policy and must be removed manually.
+    1. Note: The asset S3 bucket has a retention policy and must be removed manually.
 
 1. For more details refer to [AWS CDK Toolkit](https://docs.aws.amazon.com/cdk/latest/guide/cli.html)
 
@@ -594,4 +603,5 @@ The following people are involved in the reviews:
 
 ## License Summary
 
-This sample code is made available under the MIT-0 license. See the LICENSE file.
+This sample code is made available under the MIT-0 license.
+See the LICENSE file.
