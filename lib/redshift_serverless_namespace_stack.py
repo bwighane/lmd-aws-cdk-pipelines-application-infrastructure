@@ -14,7 +14,7 @@ class RedshiftServerlessNamespaceStack(cdk.Stack):
         redshift_full_command_access = iam.ManagedPolicy.from_aws_managed_policy_name(
             "AmazonRedshiftAllCommandsFullAccess")
 
-        role = iam.Role(self, "sls-test-role",
+        role = iam.Role(self, "LMD20RedshiftServerlessRole",
                         assumed_by=iam.ServicePrincipal("redshift.amazonaws.com"),
                         managed_policies=[redshift_full_command_access])
 
