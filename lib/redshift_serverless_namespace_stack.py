@@ -3,7 +3,6 @@ import aws_cdk.aws_redshiftserverless as redshiftserverless
 import aws_cdk.core as cdk
 import aws_cdk.aws_iam as iam
 import aws_cdk.aws_secretsmanager as secretsmanager
-
 from .configuration import (REDSHIFT_DEFAULT_USER, REDSHIFT_DEFAULT_DATABASE)
 
 
