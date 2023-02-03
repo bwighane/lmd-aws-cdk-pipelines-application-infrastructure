@@ -43,6 +43,10 @@ S3_CONFORMED_BUCKET = 's3_staging_bucket'
 S3_PURPOSE_BUILT_BUCKET = 's3_curated_bucket'
 
 
+REDSHIFT_DEFAULT_USER = "master"
+REDSHIFT_DEFAULT_DATABASE = "liberia"
+
+
 def get_local_configuration(environment: str) -> dict:
     """
     Provides manually configured variables that are validated for quality and safety.
