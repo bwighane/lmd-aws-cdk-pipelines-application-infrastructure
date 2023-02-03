@@ -2,6 +2,8 @@
 import aws_cdk.aws_redshiftserverless as redshiftserverless
 import aws_cdk.core as cdk
 import aws_cdk.aws_iam as iam
+import aws_cdk.aws_secretsmanager as secretsmanager
+from .configuration import (REDSHIFT_DEFAULT_USER, REDSHIFT_DEFAULT_DATABASE)
 
 
 class RedshiftServerlessNamespaceStack(cdk.Stack):
@@ -14,15 +16,17 @@ class RedshiftServerlessNamespaceStack(cdk.Stack):
         redshift_full_command_access = iam.ManagedPolicy.from_aws_managed_policy_name(
             "AmazonRedshiftAllCommandsFullAccess")
 
-        role = iam.Role(self, "sls-test-role",
+        role = iam.Role(self, "LMD20RedshiftServerlessRole",
                         assumed_by=iam.ServicePrincipal("redshift.amazonaws.com"),
                         managed_policies=[redshift_full_command_access])
 
+        secret = secretsmanager.Secret(self, "LMD20RedshiftPassword")
+
         namespace_configuration = {
             "namespace_name": namespace_name,
-            "admin_username": "master",
-            "admin_user_password": "xuL9cMx09#iE",
-            "db_name": "liberia",
+            "admin_username": REDSHIFT_DEFAULT_USER,
+            "admin_user_password": secret.secret_value,
+            "db_name": REDSHIFT_DEFAULT_DATABASE,
             "default_iam_role_arn": role.role_arn,
             "log_exports": ["useractivitylog"],
             "tags": [{"key": "type", "value": "lmd-2"}],

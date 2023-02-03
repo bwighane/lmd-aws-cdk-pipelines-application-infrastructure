@@ -42,6 +42,9 @@ S3_RAW_BUCKET = 's3_raw_bucket'
 S3_CONFORMED_BUCKET = 's3_staging_bucket'
 S3_PURPOSE_BUILT_BUCKET = 's3_curated_bucket'
 
+REDSHIFT_DEFAULT_USER = "master"
+REDSHIFT_DEFAULT_DATABASE = "liberia"
+
 
 def get_local_configuration(environment: str) -> dict:
     """
