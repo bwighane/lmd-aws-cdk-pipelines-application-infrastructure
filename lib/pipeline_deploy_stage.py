@@ -48,6 +48,7 @@ class PipelineDeployStage(cdk.Stage):
         redshift_workgroup_stack = RedshiftServerlessWorkgroupStack(
             self,
             f'{target_environment}{logical_id_prefix}InfrastructureRedshiftServerlessWorkgroup',
+            target_environment,
             **kwargs,
         )
 

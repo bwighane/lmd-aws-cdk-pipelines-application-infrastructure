@@ -8,10 +8,10 @@ from .configuration import (REDSHIFT_DEFAULT_USER, REDSHIFT_DEFAULT_DATABASE)
 
 class RedshiftServerlessNamespaceStack(cdk.Stack):
 
-    def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: cdk.Construct, construct_id: str, target_environment: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        namespace_name = "lmd-v2"
+        namespace_name = f"{target_environment}-lmd-v2"
 
         redshift_full_command_access = iam.ManagedPolicy.from_aws_managed_policy_name(
             "AmazonRedshiftAllCommandsFullAccess")
@@ -20,7 +20,7 @@ class RedshiftServerlessNamespaceStack(cdk.Stack):
                         assumed_by=iam.ServicePrincipal("redshift.amazonaws.com"),
                         managed_policies=[redshift_full_command_access])
 
-        secret = secretsmanager.Secret(self, "LMD20RedshiftPassword")
+        secret = secretsmanager.Secret(self, f'{target_environment}LMD20RedshiftPassword')
 
         namespace_configuration = {
             "namespace_name": namespace_name,
@@ -34,4 +34,4 @@ class RedshiftServerlessNamespaceStack(cdk.Stack):
         }
 
         redshift_sls_namespace = redshiftserverless.CfnNamespace(
-            self, "namespaceid", **namespace_configuration)
+            self, f'{target_environment}lmd20namespaceid', **namespace_configuration)
