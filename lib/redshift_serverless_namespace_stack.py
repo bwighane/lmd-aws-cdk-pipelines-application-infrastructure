@@ -25,7 +25,7 @@ class RedshiftServerlessNamespaceStack(cdk.Stack):
         namespace_configuration = {
             "namespace_name": namespace_name,
             "admin_username": REDSHIFT_DEFAULT_USER,
-            "admin_user_password": secret.secret_value,
+            "admin_user_password": secret.secret_value.unsafe_plain_text(),
             "db_name": REDSHIFT_DEFAULT_DATABASE,
             "default_iam_role_arn": role.role_arn,
             "log_exports": ["useractivitylog"],
