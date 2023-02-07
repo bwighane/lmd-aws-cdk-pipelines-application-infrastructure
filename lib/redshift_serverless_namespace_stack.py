@@ -8,7 +8,7 @@ from .configuration import (REDSHIFT_DEFAULT_USER, REDSHIFT_DEFAULT_DATABASE)
 
 class RedshiftServerlessNamespaceStack(cdk.Stack):
 
-    def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: cdk.Construct, construct_id: str, env: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         namespace_name = "lmd-v2"
@@ -34,4 +34,4 @@ class RedshiftServerlessNamespaceStack(cdk.Stack):
         }
 
         redshift_sls_namespace = redshiftserverless.CfnNamespace(
-            self, "namespaceid", **namespace_configuration)
+            self, f'{env}lmd20namespaceid', **namespace_configuration)

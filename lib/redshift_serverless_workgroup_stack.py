@@ -8,7 +8,7 @@ from .redshift_serverless_namespace_stack import RedshiftServerlessNamespaceStac
 
 class RedshiftServerlessWorkgroupStack(cdk.Stack):
 
-    def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: cdk.Construct, construct_id: str, env: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         namespace_name = "lmd-v2"
@@ -22,9 +22,9 @@ class RedshiftServerlessWorkgroupStack(cdk.Stack):
         }
         redshift_namespace_stack = RedshiftServerlessNamespaceStack(
             self,
-            f'slsnspace',
+            f'{env}slsnspace',
             **kwargs,
         )
         self.add_dependency(redshift_namespace_stack)
         redshift_sls_workgroup = redshiftserverless.CfnWorkgroup(
-            self, "workgroupid", **workgroup_configuration)
+            self, f'{env}lmd20workgroupid', **workgroup_configuration)
