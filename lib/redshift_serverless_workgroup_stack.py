@@ -22,10 +22,10 @@ class RedshiftServerlessWorkgroupStack(cdk.Stack):
         }
         redshift_namespace_stack = RedshiftServerlessNamespaceStack(
             self,
-            f'{target_environment}slsnspace',
+            f'{target_environment}rednspace'.lower(),
             target_environment,
             **kwargs,
         )
         self.add_dependency(redshift_namespace_stack)
         redshift_sls_workgroup = redshiftserverless.CfnWorkgroup(
-            self, f'{target_environment}lmd20workgroupid', **workgroup_configuration)
+            self, f'{target_environment}lmdworkgroupid'.lower(), **workgroup_configuration)
