@@ -11,7 +11,7 @@ class RedshiftServerlessNamespaceStack(cdk.Stack):
     def __init__(self, scope: cdk.Construct, construct_id: str, target_environment: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        namespace_name = f"{target_environment}-lmd-v2"
+        namespace_name = f"{target_environment}-lmd-v2".lower()
 
         redshift_full_command_access = iam.ManagedPolicy.from_aws_managed_policy_name(
             "AmazonRedshiftAllCommandsFullAccess")
