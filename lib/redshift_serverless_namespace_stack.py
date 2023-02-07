@@ -20,7 +20,11 @@ class RedshiftServerlessNamespaceStack(cdk.Stack):
                         assumed_by=iam.ServicePrincipal("redshift.amazonaws.com"),
                         managed_policies=[redshift_full_command_access])
 
-        secret = secretsmanager.Secret(self, f'{target_environment}LMD20RedshiftPassword')
+        secret_string_generator = secretsmanager.SecretStringGenerator(
+            include_space=False, exclude_punctuation=True, password_length=15, require_each_included_type=True, exclude_characters=" \\\"\/@")
+
+        secret = secretsmanager.Secret(self, f'{target_environment}LMD20RedshiftPassword',
+                                       generate_secret_string=secret_string_generator)
 
         namespace_configuration = {
             "namespace_name": namespace_name,
