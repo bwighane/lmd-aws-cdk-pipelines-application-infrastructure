@@ -11,19 +11,19 @@ class RedshiftServerlessNamespaceStack(cdk.Stack):
     def __init__(self, scope: cdk.Construct, construct_id: str, target_environment: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        namespace_name = f"{target_environment}-lmd-v2"
+        namespace_name = f"{target_environment}-lmd-v2".lower()
 
         redshift_full_command_access = iam.ManagedPolicy.from_aws_managed_policy_name(
             "AmazonRedshiftAllCommandsFullAccess")
 
-        role = iam.Role(self, "LMD20RedshiftServerlessRole",
+        role = iam.Role(self, f"{target_environment}LMDRedshiftServerlessRole",
                         assumed_by=iam.ServicePrincipal("redshift.amazonaws.com"),
                         managed_policies=[redshift_full_command_access])
 
         secret_string_generator = secretsmanager.SecretStringGenerator(
             include_space=False, exclude_punctuation=True, password_length=15, require_each_included_type=True, exclude_characters=" \\\"\/@")
 
-        secret = secretsmanager.Secret(self, f'{target_environment}LMD20RedshiftPassword',
+        secret = secretsmanager.Secret(self, f'{target_environment}LMDRedshiftPassword',
                                        generate_secret_string=secret_string_generator)
 
         namespace_configuration = {
@@ -38,4 +38,4 @@ class RedshiftServerlessNamespaceStack(cdk.Stack):
         }
 
         redshift_sls_namespace = redshiftserverless.CfnNamespace(
-            self, f'{target_environment}lmd20namespaceid', **namespace_configuration)
+            self, f'{target_environment}lmdnamespaceid'.lower(), **namespace_configuration)
