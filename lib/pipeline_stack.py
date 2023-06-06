@@ -66,7 +66,7 @@ class PipelineStack(cdk.Stack):
                 oauth_token=cdk.SecretValue.secrets_manager(
                     self.mappings[DEPLOYMENT][GITHUB_TOKEN]
                 ),
-                trigger=codepipeline_actions.GitHubTrigger.POLL,
+                trigger=codepipeline_actions.GitHubTrigger.WEBHOOK,
                 owner=self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_OWNER_NAME],
                 repo=self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_NAME],
             ),
