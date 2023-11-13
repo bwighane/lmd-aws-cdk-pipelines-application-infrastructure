@@ -9,11 +9,19 @@ class LambdaGatewayStack(cdk.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # Defines an AWS Lambda resource
+        # my_lambda = _lambda.Function(
+        #     self, 'HelloHandler',
+        #     runtime=_lambda.Runtime.PYTHON_3_7,
+        #     code=_lambda.Code.from_asset('lambda'),
+        #     handler='hello.handler',
+        # )
+        
+        # Defines an AWS Lambda resource
         my_lambda = _lambda.Function(
             self, 'HelloHandler',
-            runtime=_lambda.Runtime.PYTHON_3_7,
+            runtime=_lambda.Runtime.NODEJS_16_X,
             code=_lambda.Code.from_asset('lambda'),
-            handler='hello.handler',
+            handler='index.main',
         )
 
         apigw.LambdaRestApi(
