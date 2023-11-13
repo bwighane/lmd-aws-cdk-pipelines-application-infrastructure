@@ -23,6 +23,8 @@ VPC_CIDR = '10.20.0.0/24'
 
 # Secrets Manager Inputs
 GITHUB_TOKEN = 'github_token'
+DB_USERNAME = 'db_username'
+DB_PASSWORD = 'db_password' # I will hahve to configure this within the accounts_secret file.
 
 # Used in Automated Outputs
 VPC_ID = 'vpc_id'

@@ -11,7 +11,7 @@ from .configuration import (
     DEPLOYMENT, GITHUB_REPOSITORY_NAME, GITHUB_REPOSITORY_OWNER_NAME, GITHUB_TOKEN,
     get_logical_id_prefix, get_resource_name_prefix, get_all_configurations
 )
-from .pipeline_deploy_stage import PipelineDeployStage
+from .pipeline_deploy_stage import PipelineStage
 
 
 class PipelineStack(cdk.Stack):
@@ -132,7 +132,7 @@ class PipelineStack(cdk.Stack):
         )
 
         pipeline.add_application_stage(
-            PipelineDeployStage(
+            PipelineStage(
                 self,
                 target_environment,
                 target_environment=target_environment,

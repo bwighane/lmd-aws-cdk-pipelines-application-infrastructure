@@ -22,3 +22,5 @@ aws-cdk.core~=1.181.1
 aws-cdk.pipelines~=1.181.1
 aws-cdk.aws-redshiftserverless~=1.181.1
 boto3~=1.17.97
+aws-cdk.aws-dms~=1.181.1
+aws-cdk.aws-sns
