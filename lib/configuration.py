@@ -14,11 +14,11 @@ ENVIRONMENT = 'environment'
 
 # Manual Inputs
 GITHUB_REPOSITORY_OWNER_NAME = 'Last-Mile-Health'
-GITHUB_REPOSITORY_NAME = 'lmd-aws-cdk-pipelines-datalake-infrastructure'
+GITHUB_REPOSITORY_NAME = 'lmd-aws-cdk-pipelines-application-infrastructure'
 ACCOUNT_ID = '829553079673'
 REGION = 'us-east-1'
 LOGICAL_ID_PREFIX = 'LMDCDKApplication'
-RESOURCE_NAME_PREFIX = 'lmd-v2'
+RESOURCE_NAME_PREFIX = 'lmd-application'
 VPC_CIDR = '10.20.0.0/24'
 
 # Secrets Manager Inputs
@@ -38,12 +38,9 @@ ROUTE_TABLE_1 = 'route_table_1'
 ROUTE_TABLE_2 = 'route_table_2'
 ROUTE_TABLE_3 = 'route_table_3'
 SHARED_SECURITY_GROUP_ID = 'shared_security_group_id'
+
 S3_KMS_KEY = 's3_kms_key'
 S3_ACCESS_LOG_BUCKET = 's3_access_log_bucket'
-S3_RAW_BUCKET = 's3_raw_bucket'
-S3_CONFORMED_BUCKET = 's3_staging_bucket'
-S3_PURPOSE_BUILT_BUCKET = 's3_curated_bucket'
-
 
 def get_local_configuration(environment: str) -> dict:
     """
@@ -68,7 +65,7 @@ def get_local_configuration(environment: str) -> dict:
             # This is used in resources that must be globally unique!
             # It may only contain alphanumeric characters, hyphens, and cannot contain trailing hyphens
             # E.g. unique-identifier-data-lake
-            RESOURCE_NAME_PREFIX: 'lmd-v2',
+            RESOURCE_NAME_PREFIX: 'lmd-application',
         },
         DEV: {
             ACCOUNT_ID: '002190277880',
@@ -124,9 +121,6 @@ def get_environment_configuration(environment: str) -> dict:
         SHARED_SECURITY_GROUP_ID: f'{environment}SharedSecurityGroupId',
         S3_KMS_KEY: f'{environment}S3KmsKeyArn',
         S3_ACCESS_LOG_BUCKET: f'{environment}S3AccessLogBucket',
-        S3_RAW_BUCKET: f'{environment}RawBucketName',
-        S3_CONFORMED_BUCKET: f'{environment}StagingBucketName',
-        S3_PURPOSE_BUILT_BUCKET: f'{environment}CuratedBucketName',
     }
 
     return {**cloudformation_output_mapping, **get_local_configuration(environment)}

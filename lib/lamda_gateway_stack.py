@@ -14,7 +14,6 @@ class LambdaGatewayStack(cdk.Stack):
             runtime=_lambda.Runtime.PYTHON_3_7,
             code=_lambda.Code.from_asset('lambda'),
             handler='hello.handler',
-            # environment=target_environment,
         )
 
         apigw.LambdaRestApi(

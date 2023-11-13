@@ -13,7 +13,7 @@ class PipelineStage(cdk.Stage):
 
         service = LambdaGatewayStack(
             self,
-            f"{target_environment}{logical_id_prefix}LambdaGateway",
+            f"{target_environment}-LambdaGateway",
             target_environment,
             **kwargs,
         )
