@@ -136,7 +136,6 @@ class PipelineStack(cdk.Stack):
                 self,
                 target_environment,
                 target_environment=target_environment,
-                deployment_account_id=self.account,
                 env=target_aws_env,
             )
         )

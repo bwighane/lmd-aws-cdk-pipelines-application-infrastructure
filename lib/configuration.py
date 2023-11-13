@@ -17,7 +17,7 @@ GITHUB_REPOSITORY_OWNER_NAME = 'Last-Mile-Health'
 GITHUB_REPOSITORY_NAME = 'lmd-aws-cdk-pipelines-datalake-infrastructure'
 ACCOUNT_ID = '829553079673'
 REGION = 'us-east-1'
-LOGICAL_ID_PREFIX = 'LMDCDKDataLake'
+LOGICAL_ID_PREFIX = 'LMDCDKApplication'
 RESOURCE_NAME_PREFIX = 'lmd-v2'
 VPC_CIDR = '10.20.0.0/24'
 
@@ -44,9 +44,6 @@ S3_RAW_BUCKET = 's3_raw_bucket'
 S3_CONFORMED_BUCKET = 's3_staging_bucket'
 S3_PURPOSE_BUILT_BUCKET = 's3_curated_bucket'
 
-REDSHIFT_DEFAULT_USER = "master"
-REDSHIFT_DEFAULT_DATABASE = "liberia"
-
 
 def get_local_configuration(environment: str) -> dict:
     """
@@ -63,11 +60,11 @@ def get_local_configuration(environment: str) -> dict:
             REGION: 'us-east-1',
             GITHUB_REPOSITORY_OWNER_NAME: 'Last-Mile-Health',
             # If you use GitHub / GitHub Enterprise, this will be the organization name
-            GITHUB_REPOSITORY_NAME: 'lmd-aws-cdk-pipelines-datalake-infrastructure',
+            GITHUB_REPOSITORY_NAME: 'lmd-aws-cdk-pipelines-application-infrastructure',
             # Use your forked repo here!
             # This is used in the Logical Id of CloudFormation resources
             # We recommend capital case for consistency. e.g. DataLakeCdkBlog
-            LOGICAL_ID_PREFIX: 'LMDCDKDataLake',
+            LOGICAL_ID_PREFIX: 'LMDCDKApplication',
             # This is used in resources that must be globally unique!
             # It may only contain alphanumeric characters, hyphens, and cannot contain trailing hyphens
             # E.g. unique-identifier-data-lake
