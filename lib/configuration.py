@@ -41,6 +41,7 @@ SHARED_SECURITY_GROUP_ID = 'shared_security_group_id'
 
 S3_KMS_KEY = 's3_kms_key'
 S3_ACCESS_LOG_BUCKET = 's3_access_log_bucket'
+S3_UPLOAD_BUCKET = 's3_upload_bucket'
 
 def get_local_configuration(environment: str) -> dict:
     """
@@ -121,6 +122,7 @@ def get_environment_configuration(environment: str) -> dict:
         SHARED_SECURITY_GROUP_ID: f'{environment}SharedSecurityGroupId',
         S3_KMS_KEY: f'{environment}S3KmsKeyArn',
         S3_ACCESS_LOG_BUCKET: f'{environment}S3AccessLogBucket',
+        S3_UPLOAD_BUCKET: f'{environment}S3UploadBucket',
     }
 
     return {**cloudformation_output_mapping, **get_local_configuration(environment)}
