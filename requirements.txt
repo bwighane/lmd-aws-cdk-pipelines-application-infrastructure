@@ -1,4 +1,4 @@
--e .
+
 aws-cdk.aws-cloudformation~=1.181.1
 aws-cdk.aws-cloudwatch~=1.181.1
 aws-cdk.aws-codebuild~=1.181.1
@@ -21,9 +21,7 @@ aws-cdk.aws-ssm~=1.181.1
 aws-cdk.core~=1.181.1
 aws-cdk.pipelines~=1.181.1
 aws-cdk.aws-redshiftserverless~=1.181.1
-boto3~=1.17.97
 aws-cdk.aws-dms~=1.181.1
-aws-cdk.aws-sns
-
-# aws-cdk-lib==2.20.0
-# constructs>=10.0.0,<11.0.0
+aws-cdk.aws-rds~=1.181.1
+aws-cdk.aws-sns~=1.181.1
+boto3~=1.17.97

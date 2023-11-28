@@ -2,7 +2,6 @@ import aws_cdk.core as cdk
 from .tagging import tag
 from .configuration import get_logical_id_prefix
 from constructs import Construct
-from .lamda_gateway_stack import LambdaGatewayStack
 from .serverless_backend_stack import ServerlessBackendStack
 
 

@@ -21,6 +21,11 @@ LOGICAL_ID_PREFIX = 'LMDCDKApplication'
 RESOURCE_NAME_PREFIX = 'lmd-application'
 VPC_CIDR = '10.20.0.0/24'
 
+ENGINE_VERSION = '5.6'
+ENGINE_NAME = 'mysql'
+MAINTENANCE_WINDOW = 'Sun'
+DB_INSTANCE_CLASS = 'db.t2.micro'
+
 # Secrets Manager Inputs
 GITHUB_TOKEN = 'github_token'
 DB_USERNAME = 'db_username'
