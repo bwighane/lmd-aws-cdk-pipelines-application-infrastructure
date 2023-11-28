@@ -5,13 +5,12 @@ import aws_cdk.aws_dynamodb as _dynamodb
 import aws_cdk.aws_lambda as _lambda
 import aws_cdk.aws_apigateway as _apigateway
 import aws_cdk.aws_rds as rds
+import aws_cdk.aws_ec2 as ec2
+
 
 from .configuration import (
     S3_UPLOAD_BUCKET,
-    VPC_ID,
-    SUBNET_ID_1,
-    ENGINE_VERSION,
-    DB_INSTANCE_CLASS,
+    VPC_CIDR,
     get_environment_configuration,
     get_logical_id_prefix,
 )
@@ -29,6 +28,20 @@ class ServerlessBackendStack(cdk.Stack):
         self.target_environment = target_environment
         mappings = get_environment_configuration(target_environment)
         logical_id_prefix = get_logical_id_prefix()
+        
+        mappings = get_environment_configuration(target_environment)
+        vpc_cidr = mappings[VPC_CIDR]
+        logical_id_prefix = get_logical_id_prefix()
+        vpc = ec2.Vpc(self, f'{logical_id_prefix}Vpc', cidr=vpc_cidr)
+        
+        vpc.add_gateway_endpoint(
+            f'{target_environment}{logical_id_prefix}S3Endpoint',
+            service=ec2.GatewayVpcEndpointAwsService.S3
+        )
+        vpc.add_gateway_endpoint(
+            f'{target_environment}{logical_id_prefix}DynamoEndpoint',
+            service=ec2.GatewayVpcEndpointAwsService.DYNAMODB
+        )
 
         user_pool = _cognito.UserPool(
             self, f"{target_environment}{logical_id_prefix}UserPool"
@@ -68,15 +81,17 @@ class ServerlessBackendStack(cdk.Stack):
             code=_lambda.Code.from_asset(os.path.join("./", "lambda")),
             environment={"bucket": upload_bucket.bucket_name, "table": file_upload_meta_table.table_name},
         )
+        
+        engine_version = rds.MysqlEngineVersion.VER_8_0_28
+        instance_type = ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.MICRO)
 
         rds_instance = rds.DatabaseInstance(
             self,
-            "MySqlInstance",
+            f"{logical_id_prefix}MySqlInstance",
             database_name=f"{logical_id_prefix}applicationDBinstance",
-            engine=rds.DatabaseInstanceEngine.mysql(version=ENGINE_VERSION),
-            instance_type=DB_INSTANCE_CLASS,
-            vpc_subnets=SUBNET_ID_1,
-            vpc=VPC_ID,
+            engine=rds.DatabaseInstanceEngine.mysql(version=engine_version),
+            instance_type=instance_type,
+            vpc=vpc,
             port=3306,
             deletion_protection=False,
         )
