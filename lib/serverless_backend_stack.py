@@ -57,14 +57,14 @@ class ServerlessBackendStack(cdk.Stack):
             self, id=f"{logical_id_prefix}uploads3bucket", bucket_name=self.mappings[S3_UPLOAD_BUCKET].lower()
         )
         
-        vpc.add_gateway_endpoint(
-            f'{target_environment}{logical_id_prefix}S3Endpoint',
-            service=ec2.GatewayVpcEndpointAwsService.S3
-        )
-        vpc.add_gateway_endpoint(
-            f'{target_environment}{logical_id_prefix}DynamoEndpoint',
-            service=ec2.GatewayVpcEndpointAwsService.DYNAMODB
-        )
+        # vpc.add_gateway_endpoint(
+        #     f'{target_environment}{logical_id_prefix}S3Endpoint',
+        #     service=ec2.GatewayVpcEndpointAwsService.S3
+        # )
+        # vpc.add_gateway_endpoint(
+        #     f'{target_environment}{logical_id_prefix}DynamoEndpoint',
+        #     service=ec2.GatewayVpcEndpointAwsService.DYNAMODB
+        # )
         
         engine_version = rds.MysqlEngineVersion.VER_8_0_28
         instance_type = ec2.InstanceType.of(ec2.InstanceClass.T2, ec2.InstanceSize.MICRO)
