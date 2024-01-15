@@ -8,10 +8,10 @@ import logging
 s3 = boto3.client("s3")
 dynamodb = boto3.client("dynamodb")
 
+table = os.environ["table"]
+bucket = os.environ["bucket"]
 
 def upload_metadata(key, file_id):
-    table = os.environ["table"]
-    bucket = os.environ["bucket"]
     reference = {"Bucket": {"S": bucket}, "Key": {"S": key}}
     response = dynamodb.put_item(
         TableName=table,
@@ -20,15 +20,18 @@ def upload_metadata(key, file_id):
     print(response)
 
 
-def upload_file(file_name, bucket, object_name=None):
+def upload_file_to_s3(file_name, bucket, object_name=None):
 
+    file_id = str(uuid.uuid4())
+    key = str(uuid.uuid4()) # I need to define a valid s3 key here
     # If S3 object_name was not specified, use file_name
     if object_name is None:
         object_name = os.path.basename(file_name)
 
     # Upload the file
     try:
-        response = s3.upload_file(file_name, bucket, object_name)
+        s3.upload_file(file_name, bucket, object_name)
+        upload_metadata(key, file_id)
     except ClientError as e:
         logging.error(e)
         return False
@@ -38,12 +41,10 @@ def upload_file(file_name, bucket, object_name=None):
 def handler(event, context):
     print(event)
 
-    file_id = str(uuid.uuid4())
-
     data = json.loads(event["body"])
     file_name = data["file_name"]
 
-    if upload_file(file_id, file_name):
+    if upload_file_to_s3(file_name, bucket):
         return {
             "statusCode": 200,
             "headers": {

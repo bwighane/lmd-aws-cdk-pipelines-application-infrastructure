@@ -15,7 +15,7 @@ class AmplifyStack(cdk.Stack):
         
         self.mappings = get_all_configurations()
         
-        amplify_app = amplify.App(self, "MyApp",
+        amplify_app = amplify.App(self, f'{target_environment}-lmd-UI-app',
         source_code_provider=amplify.GitHubSourceCodeProvider(
         owner=self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_OWNER_NAME],
         repository=self.mappings[DEPLOYMENT][AMPLIFY_GITHUB_REPOSITORY_NAME],

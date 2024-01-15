@@ -15,6 +15,8 @@ ENVIRONMENT = 'environment'
 # Manual Inputs
 GITHUB_REPOSITORY_OWNER_NAME = 'Last-Mile-Health'
 GITHUB_REPOSITORY_NAME = 'lmd-aws-cdk-pipelines-application-infrastructure'
+AMPLIFY_GITHUB_REPOSITORY_NAME = 'lmd-portal-UI'
+
 ACCOUNT_ID = '829553079673'
 REGION = 'us-east-1'
 LOGICAL_ID_PREFIX = 'LMDCDKApplication'
@@ -29,7 +31,7 @@ DB_INSTANCE_CLASS = 'db.t2.micro'
 # Secrets Manager Inputs
 GITHUB_TOKEN = 'github_token'
 DB_USERNAME = 'db_username'
-DB_PASSWORD = 'db_password' # I will hahve to configure this within the accounts_secret file.
+DB_PASSWORD = 'db_password'
 
 # Used in Automated Outputs
 VPC_ID = 'vpc_id'
@@ -64,6 +66,7 @@ def get_local_configuration(environment: str) -> dict:
             GITHUB_REPOSITORY_OWNER_NAME: 'Last-Mile-Health',
             # If you use GitHub / GitHub Enterprise, this will be the organization name
             GITHUB_REPOSITORY_NAME: 'lmd-aws-cdk-pipelines-application-infrastructure',
+            AMPLIFY_GITHUB_REPOSITORY_NAME: 'LastMileData2',
             # Use your forked repo here!
             # This is used in the Logical Id of CloudFormation resources
             # We recommend capital case for consistency. e.g. DataLakeCdkBlog
