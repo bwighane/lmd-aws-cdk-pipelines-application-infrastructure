@@ -1,6 +1,8 @@
 # Copyright 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
 
+# export AWS_DEFAULT_REGION=us-east-1
+
 
 import boto3
 
