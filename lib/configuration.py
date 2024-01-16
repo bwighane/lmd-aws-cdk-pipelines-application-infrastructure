@@ -29,7 +29,7 @@ MAINTENANCE_WINDOW = 'Sun'
 DB_INSTANCE_CLASS = 'db.t2.micro'
 
 # Secrets Manager Inputs
-GITHUB_TOKEN = 'github_token'
+GITHUB_TOKEN = 'authentication_token'
 DB_USERNAME = 'db_username'
 DB_PASSWORD = 'db_password'
 
