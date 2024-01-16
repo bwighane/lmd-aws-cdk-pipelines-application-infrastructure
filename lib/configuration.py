@@ -67,6 +67,7 @@ def get_local_configuration(environment: str) -> dict:
             # If you use GitHub / GitHub Enterprise, this will be the organization name
             GITHUB_REPOSITORY_NAME: 'lmd-aws-cdk-pipelines-application-infrastructure',
             AMPLIFY_GITHUB_REPOSITORY_NAME: 'LastMileData2',
+            AMPLIFY_GITHUB_REPOSITORY_NAME: 'lmd-portal-UI',
             # Use your forked repo here!
             # This is used in the Logical Id of CloudFormation resources
             # We recommend capital case for consistency. e.g. DataLakeCdkBlog
