@@ -28,6 +28,10 @@ ENGINE_NAME = 'mysql'
 MAINTENANCE_WINDOW = 'Sun'
 DB_INSTANCE_CLASS = 'db.t2.micro'
 
+# Cognito Inputs
+COGNITO_CALLBACK_URLS = 'cognito_callback_urls'
+COGNITO_LOGOUT_URLS = 'cognito_logout_urls'
+
 # Secrets Manager Inputs
 GITHUB_TOKEN = 'authentication_token'
 DB_USERNAME = 'db_username'
@@ -64,18 +68,13 @@ def get_local_configuration(environment: str) -> dict:
             ACCOUNT_ID: '829553079673',
             REGION: 'us-east-1',
             GITHUB_REPOSITORY_OWNER_NAME: 'Last-Mile-Health',
-            # If you use GitHub / GitHub Enterprise, this will be the organization name
             GITHUB_REPOSITORY_NAME: 'lmd-aws-cdk-pipelines-application-infrastructure',
             AMPLIFY_GITHUB_REPOSITORY_NAME: 'LastMileData2',
             AMPLIFY_GITHUB_REPOSITORY_NAME: 'lmd-portal-UI',
-            # Use your forked repo here!
-            # This is used in the Logical Id of CloudFormation resources
-            # We recommend capital case for consistency. e.g. DataLakeCdkBlog
             LOGICAL_ID_PREFIX: 'LMDCDKApplication',
-            # This is used in resources that must be globally unique!
-            # It may only contain alphanumeric characters, hyphens, and cannot contain trailing hyphens
-            # E.g. unique-identifier-data-lake
             RESOURCE_NAME_PREFIX: 'lmd-application',
+            COGNITO_CALLBACK_URLS: 'https://main.d1gfzcw5a606s8.amplifyapp.com/',
+            COGNITO_LOGOUT_URLS: 'https://main.d1gfzcw5a606s8.amplifyapp.com/auth/sign-in',
         },
         DEV: {
             ACCOUNT_ID: '002190277880',

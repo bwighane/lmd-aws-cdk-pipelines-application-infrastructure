@@ -36,7 +36,7 @@ class AmplifyStack(cdk.Stack):
                     "version": "1.0",
                     "frontend": {
                         "phases": {
-                            "pre_build": {"commands": ["npm ci"]},
+                            "pre_build": {"commands": ["npm install --legacy-peer-deps"]},
                             "build": {"commands": ["npm run build"]},
                         },
                         "artifacts": {"base_directory": ".next", "files": "**/*"},
