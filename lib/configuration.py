@@ -16,6 +16,7 @@ ENVIRONMENT = 'environment'
 GITHUB_REPOSITORY_OWNER_NAME = 'Last-Mile-Health'
 GITHUB_REPOSITORY_NAME = 'lmd-aws-cdk-pipelines-application-infrastructure'
 AMPLIFY_GITHUB_REPOSITORY_NAME = 'lmd-portal-UI'
+ADMIN_EMAIL = 'lmdadmin@lastmilehealth.org'
 
 ACCOUNT_ID = '829553079673'
 REGION = 'us-east-1'
