@@ -32,9 +32,10 @@ class CognitoStack(cdk.Stack):
                 require_symbols=True
             ),
             email_settings=cognito.EmailSettings(
-                from_email_address=ADMIN_EMAIL
-            ),
-        )
+                from_ = ADMIN_EMAIL,
+                reply_to =ADMIN_EMAIL
+            )
+        )    
 
         # Create a UserPool Client
         user_pool_client = user_pool.add_client(f'{id}-user-pool-client',
