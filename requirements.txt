@@ -26,4 +26,5 @@ aws-cdk.aws-rds~=1.181.1
 aws-cdk.aws-sns~=1.181.1
 aws-cdk.aws-amplify~=1.181.1
 aws-cdk.aws-elasticbeanstalk~=1.181.1
+aws-cdk.aws-ses~=1.181.1
 boto3~=1.17.97

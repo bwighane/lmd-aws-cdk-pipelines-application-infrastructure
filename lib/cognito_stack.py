@@ -31,11 +31,11 @@ class CognitoStack(cdk.Stack):
                 require_digits=True,
                 require_symbols=True
             ),
-            email_settings=cognito.EmailSettings(
-                from_ = ADMIN_EMAIL,
-                reply_to =ADMIN_EMAIL
+            email=cognito.UserPoolEmail.with_ses(
+                from_email = ADMIN_EMAIL,
+                reply_to = ADMIN_EMAIL,
             )
-        )    
+        )
 
         # Create a UserPool Client
         user_pool_client = user_pool.add_client(f'{id}-user-pool-client',
