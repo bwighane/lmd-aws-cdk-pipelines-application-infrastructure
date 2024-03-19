@@ -131,6 +131,7 @@ class PipelineStack(cdk.Stack):
             cross_account_keys=True,
         )
 
+        # TODO: Refactor this code.
         pipeline.add_application_stage(
             PipelineStage(
                 self,

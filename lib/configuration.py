@@ -15,8 +15,9 @@ ENVIRONMENT = 'environment'
 # Manual Inputs
 GITHUB_REPOSITORY_OWNER_NAME = 'Last-Mile-Health'
 GITHUB_REPOSITORY_NAME = 'lmd-aws-cdk-pipelines-application-infrastructure'
-AMPLIFY_GITHUB_REPOSITORY_NAME = 'lmd-portal-UI'
 ADMIN_EMAIL = 'lmdadmin@lastmilehealth.org'
+AMPLIFY_GITHUB_REPOSITORY_NAME = 'lmd-portal-UI'
+SERVICE_GITHUB_REPOSITORY_NAME = 'lmd-portal-services'
 
 ACCOUNT_ID = '829553079673'
 REGION = 'us-east-1'
@@ -72,6 +73,7 @@ def get_local_configuration(environment: str) -> dict:
             GITHUB_REPOSITORY_NAME: 'lmd-aws-cdk-pipelines-application-infrastructure',
             AMPLIFY_GITHUB_REPOSITORY_NAME: 'LastMileData2',
             AMPLIFY_GITHUB_REPOSITORY_NAME: 'lmd-portal-UI',
+            SERVICE_GITHUB_REPOSITORY_NAME: 'lmd-portal-services',
             LOGICAL_ID_PREFIX: 'LMDCDKApplication',
             RESOURCE_NAME_PREFIX: 'lmd-application',
             COGNITO_CALLBACK_URLS: 'https://main.d1gfzcw5a606s8.amplifyapp.com/',

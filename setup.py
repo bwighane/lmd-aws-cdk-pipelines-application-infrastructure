@@ -9,15 +9,16 @@ with open("README.md") as fp:
 
 
 setuptools.setup(
-    name="aws_cdk_pipelines_blog_datalake_infrastructure",
-    version="0.0.1",
-    description="A CDK Python app for deploying foundational infrastructure for a Data Lake in AWS",
+    name="lmd_aws_cdk_pipelines_application_infrastructure",
+    version="0.0.2",
+    description="A CDK Python app for deploying foundational infrastructure for Last Mile Data Portal in AWS",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="Isaiah Grant <igrant@2ndwatch.com>, Ravi Itha <itharav@amazon.com>, Zahid Muhammad Ali <zhidli@amazon.com>",
+    author="Branford T Gbieor <gbieorbranford@gmail.com>",
     packages=setuptools.find_packages(),
     install_requires=[
-        "aws-cdk.core==1.181.1",
+        "aws-cdk-lib>=2.0.0",
+        "constructs>=10.0.0",
     ],
     python_requires=">=3.9",
     classifiers=[
