@@ -55,7 +55,12 @@ class PipelineStack(Stack):
 
         logical_id_prefix = get_logical_id_prefix()
 
-        input = CodePipelineSource.git_hub("Last-Mile-Health/lmd-aws-cdk-pipelines-application-infrastructure", "main")
+        # repository = self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_OWNER_NAME] + \
+        # "/" + self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_NAME]
+
+        repository = "Last-Mile-Health/lmd-aws-cdk-pipelines-application-infrastructure"
+
+        input = CodePipelineSource.git_hub(repository, target_branch)
 
         pipeline = CodePipeline(
             self,
@@ -154,6 +159,7 @@ class PipelineStack(Stack):
         # )
 
         # TODO: Refactor this code.
+
         pipeline.add_stage(
             PipelineDeployStage(
                 self,
