@@ -1,7 +1,7 @@
 # Copyright 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
 
-import aws_cdk.core as cdk
+from aws_cdk import Tags
 
 from .configuration import (
     get_logical_id_prefix, get_resource_name_prefix,
@@ -21,10 +21,10 @@ def tag(stack, target_environment: str):
     @param stack: The stack to tag
     @param target_environment: The environment the stack is deployed to
     """
-    cdk.Tags.of(stack).add(*get_tag(COST_CENTER, target_environment))
-    cdk.Tags.of(stack).add(*get_tag(TAG_ENVIRONMENT, target_environment))
-    cdk.Tags.of(stack).add(*get_tag(TEAM, target_environment))
-    cdk.Tags.of(stack).add(*get_tag(APPLICATION, target_environment))
+    Tags.of(stack).add(*get_tag(COST_CENTER, target_environment))
+    Tags.of(stack).add(*get_tag(TAG_ENVIRONMENT, target_environment))
+    Tags.of(stack).add(*get_tag(TEAM, target_environment))
+    Tags.of(stack).add(*get_tag(APPLICATION, target_environment))
 
 
 def get_tag(tag_name, target_environment) -> dict:

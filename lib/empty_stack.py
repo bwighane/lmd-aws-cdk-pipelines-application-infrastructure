@@ -1,12 +1,13 @@
 # Copyright 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: MIT-0
 
-import aws_cdk.core as cdk
+from aws_cdk import Stack
+from constructs import Construct
 
 
-class EmptyStack(cdk.Stack):
+class EmptyStack(Stack):
 
-    def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         """
         This stack is intentionally left empty. This is used during bootstrap to prevent synth of
         stacks that are dependend on configuration.

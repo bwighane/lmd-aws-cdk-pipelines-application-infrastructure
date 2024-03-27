@@ -1,4 +1,5 @@
-import aws_cdk.core as cdk
+
+from aws_cdk import Stage
 from .tagging import tag
 from constructs import Construct
 from .amplify_stack import AmplifyStack
@@ -6,7 +7,7 @@ from .cognito_stack import CognitoStack
 from .beanstalk_stack import BeanstalkStack
 
 
-class PipelineStage(cdk.Stage):
+class PipelineDeployStage(Stage):
     def __init__(self, scope: Construct, construct_id: str, target_environment: str, **kwargs):
         super().__init__(scope, construct_id, **kwargs)
 
@@ -19,7 +20,7 @@ class PipelineStage(cdk.Stage):
             **kwargs,
         )
         '''
-        
+
         # Create the Amplify stack
         amplify_stack = AmplifyStack(
             self,
@@ -27,7 +28,7 @@ class PipelineStage(cdk.Stage):
             target_environment=target_environment,
             **kwargs,
         )
-        
+
         # Create the Cognito stack
         cognito_stack = CognitoStack(
             self,
@@ -35,7 +36,7 @@ class PipelineStage(cdk.Stage):
             target_environment=target_environment,
             **kwargs,
         )
-        
+
         # create the beanstalk environment with codedeploy and codepipeline integration
         beanstalk_stack = BeanstalkStack(
             self,
@@ -43,7 +44,7 @@ class PipelineStage(cdk.Stage):
             target_environment=target_environment,
             **kwargs,
         )
-        
+
         # Tag the backend_service and amplify_stack with the target_environment
         tag(amplify_stack, target_environment)
         tag(cognito_stack, target_environment)
