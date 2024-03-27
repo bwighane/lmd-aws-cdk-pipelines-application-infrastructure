@@ -1,6 +1,7 @@
-import aws_cdk.aws_codebuild as codebuild
-import aws_cdk.aws_amplify as amplify
-import aws_cdk.core as cdk
+from aws_cdk import Stack, SecretValue
+from aws_cdk import aws_codebuild as codebuild
+from aws_cdk import aws_amplify_alpha as amplify_alpha
+from constructs import Construct
 
 from .configuration import (
     DEPLOYMENT,
@@ -11,22 +12,22 @@ from .configuration import (
 )
 
 
-class AmplifyStack(cdk.Stack):
+class AmplifyStack(Stack):
     def __init__(
-        self, scope: cdk.Construct, construct_id: str, target_environment: str, **kwargs
+        self, scope: Construct, construct_id: str, target_environment: str, **kwargs
     ) -> None:
 
         super().__init__(scope, construct_id, **kwargs)
 
         self.mappings = get_all_configurations()
 
-        amplify_app = amplify.App(
+        amplify_app = amplify_alpha.App(
             self,
             f"{target_environment}-app",
-            source_code_provider=amplify.GitHubSourceCodeProvider(
+            source_code_provider=amplify_alpha.GitHubSourceCodeProvider(
                 owner=self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_OWNER_NAME],
                 repository=self.mappings[DEPLOYMENT][AMPLIFY_GITHUB_REPOSITORY_NAME],
-                oauth_token=cdk.SecretValue.secrets_manager(
+                oauth_token=SecretValue.secrets_manager(
                     self.mappings[DEPLOYMENT][GITHUB_TOKEN]
                 ),
             ),

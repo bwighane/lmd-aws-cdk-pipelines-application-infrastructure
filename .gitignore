@@ -22,3 +22,5 @@ lib/python3.11
 values.txt
 bin/
 pyvenv.cfg
+
+.venv/

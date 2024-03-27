@@ -13,18 +13,18 @@ from .configuration import (
     DEPLOYMENT, SERVICE_GITHUB_REPOSITORY_NAME, GITHUB_REPOSITORY_OWNER_NAME, GITHUB_TOKEN, get_all_configurations
 )
 
+
 class BeanstalkStack(Stack):
     def __init__(self, scope: Construct, id: str, target_environment: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
-        
         self.mappings = get_all_configurations()
         self.create_beanstalk_pipeline(
             target_environment,
         )
-        
+
     def create_beanstalk_pipeline(self, target_environment):
-        
+
         source_artifact = codepipeline.Artifact()
 
         # Create an Elastic Beanstalk application
@@ -94,7 +94,7 @@ class BeanstalkStack(Stack):
             pipeline_name=f'{target_environment}-pipeline',
             cross_account_keys=True,
         )
-        
+
         # Add stages to the pipeline
         source_stage = codepipeline.StageProps(
             stage_name="Source",
@@ -133,7 +133,7 @@ class BeanstalkStack(Stack):
                 )
             ]
         )
-        
-        app_pipeline.add_stage(source_stage)
-        app_pipeline.add_stage(build_stage)
-        app_pipeline.add_stage(deploy_stage)
+
+        app_pipeline.add_stage(stage_name=source_stage.stage_name, actions=source_stage.actions)
+        app_pipeline.add_stage(stage_name=build_stage.stage_name, actions=build_stage.actions)
+        app_pipeline.add_stage(stage_name=deploy_stage.stage_name, actions=deploy_stage.actions)
