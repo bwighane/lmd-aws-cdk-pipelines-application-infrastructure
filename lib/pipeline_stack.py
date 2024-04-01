@@ -59,7 +59,7 @@ class PipelineStack(Stack):
         repository = self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_OWNER_NAME] + \
             "/" + self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_NAME]
 
-        # repository = "Last-Mile-Health/lmd-aws-cdk-pipelines-application-infrastructure"
+        repository = "Last-Mile-Health/lmd-aws-cdk-pipelines-application-infrastructure"
 
         resource_name_prefix = get_resource_name_prefix()
 
