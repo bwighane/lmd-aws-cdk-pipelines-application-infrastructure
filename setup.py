@@ -14,7 +14,7 @@ setuptools.setup(
     description="A CDK Python app for deploying foundational infrastructure for Last Mile Data Portal in AWS",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="Branford T Gbieor <gbieorbranford@gmail.com>",
+    author="Branford T Gbieor <gbieorbranford@gmail.com>, Bwighane Mwalwanda <bsmwalwanda@gmail.com>",
     packages=setuptools.find_packages(),
     install_requires=[
         "aws-cdk-lib==2.33.0",
