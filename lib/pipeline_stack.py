@@ -6,7 +6,7 @@ from constructs import Construct
 
 from aws_cdk import pipelines as pipelines
 from aws_cdk import aws_iam as iam
-from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
+from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep, CodeBuildStep
 from aws_cdk.aws_codebuild import BuildSpec
 from aws_cdk.aws_codepipeline_actions import GitHubTrigger
 
@@ -73,11 +73,11 @@ class PipelineStack(Stack):
 
         pipeline = CodePipeline(
             self,
-            f'{target_environment}{logical_id_prefix}ApplicationPipeline',
+            f'{target_environment}{logical_id_prefix}InfrustructurePipeline',
             pipeline_name=f'{target_environment.lower()}-{resource_name_prefix}-infrastructure-pipeline',
             self_mutation=False,
             cross_account_keys=True,
-            synth=ShellStep(
+            synth=CodeBuildStep(
                 "Synth",
                 input=input,
                 commands=[
@@ -85,19 +85,73 @@ class PipelineStack(Stack):
                     "pip3 install -r requirements.txt",
                     f'export ENV={target_environment} && cdk synth --verbose'
                 ],
-            ),
-            cli_version="2",
-            synth_code_build_defaults={
-                "partial_build_spec": BuildSpec.from_object({
-                    "phases": {
-                        "install": {
-                            "runtime-versions": {
-                                "nodejs": "20"
+                cli_version="2",
+                synth_code_build_defaults={
+                    "partial_build_spec": BuildSpec.from_object({
+                        "version": "0.2",
+                        "phases": {
+                            "install": {
+                                "runtime-versions": {
+                                    "nodejs": "20",
+                                    "python": "3.12"
+                                }
                             }
                         }
-                    }
-                })
-            }
+                    })
+                },
+                role_policy_statements=[
+                    iam.PolicyStatement(
+                        sid='InfrastructurePipelineSecretsManagerPolicy',
+                        effect=iam.Effect.ALLOW,
+                        actions=[
+                            'secretsmanager:*',
+                        ],
+                        resources=[
+                            f'arn:aws:secretsmanager:{self.region}:{self.account}:secret:/DataLake/*',
+                        ],
+                    ),
+                    iam.PolicyStatement(
+                        sid='InfrastructurePipelineSTSAssumeRolePolicy',
+                        effect=iam.Effect.ALLOW,
+                        actions=[
+                            'sts:AssumeRole',
+                        ],
+                        resources=[
+                            '*',
+                        ],
+                    ),
+                    iam.PolicyStatement(
+                        sid='InfrastructurePipelineKmsPolicy',
+                        effect=iam.Effect.ALLOW,
+                        actions=[
+                            'kms:*',
+                        ],
+                        resources=[
+                            '*',
+                        ],
+                    ),
+                    iam.PolicyStatement(
+                        sid='InfrastructurePipelineVpcPolicy',
+                        effect=iam.Effect.ALLOW,
+                        actions=[
+                            'vpc:*',
+                        ],
+                        resources=[
+                            '*',
+                        ],
+                    ),
+                    iam.PolicyStatement(
+                        sid='InfrastructurePipelineEc2Policy',
+                        effect=iam.Effect.ALLOW,
+                        actions=[
+                            'ec2:*',
+                        ],
+                        resources=[
+                            '*',
+                        ],
+                    ),
+                ]
+            ),
         )
         # source_artifact = codepipeline.Artifact()
         # cloud_assembly_artifact = codepipeline.Artifact()
