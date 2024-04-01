@@ -4,7 +4,7 @@ from .tagging import tag
 from constructs import Construct
 from .amplify_stack import AmplifyStack
 from .cognito_stack import CognitoStack
-from .beanstalk_stack import BeanstalkStack
+# from .beanstalk_stack import BeanstalkStack
 
 
 class PipelineDeployStage(Stage):
@@ -38,14 +38,14 @@ class PipelineDeployStage(Stage):
         )
 
         # create the beanstalk environment with codedeploy and codepipeline integration
-        beanstalk_stack = BeanstalkStack(
-            self,
-            f"{target_environment}-beanstalk",
-            target_environment=target_environment,
-            **kwargs,
-        )
+        # beanstalk_stack = BeanstalkStack(
+        #     self,
+        #     f"{target_environment}-beanstalk",
+        #     target_environment=target_environment,
+        #     **kwargs,
+        # )
 
         # Tag the backend_service and amplify_stack with the target_environment
         tag(amplify_stack, target_environment)
         tag(cognito_stack, target_environment)
-        tag(beanstalk_stack, target_environment)
+        # tag(beanstalk_stack, target_environment)
