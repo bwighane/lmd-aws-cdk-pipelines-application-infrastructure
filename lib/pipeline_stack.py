@@ -81,6 +81,7 @@ class PipelineStack(Stack):
                 commands=[
                     "npm install -g aws-cdk",
                     "pip3 install -r requirements.txt",
+                    "echo \'about to synth\'",
                     f'export ENV={target_environment} && cdk synth --verbose'
                 ],
             ),
