@@ -38,12 +38,12 @@ class PipelineDeployStage(Stage):
         )
 
         # create the beanstalk environment with codedeploy and codepipeline integration
-        beanstalk_stack = BeanstalkStack(
-            self,
-            f"{target_environment}-beanstalk",
-            target_environment=target_environment,
-            **kwargs,
-        )
+        # beanstalk_stack = BeanstalkStack(
+        #     self,
+        #     f"{target_environment}-beanstalk",
+        #     target_environment=target_environment,
+        #     **kwargs,
+        # )
 
         # Tag the backend_service and amplify_stack with the target_environment
         tag(amplify_stack, target_environment)
