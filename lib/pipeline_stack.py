@@ -7,6 +7,7 @@ from constructs import Construct
 from aws_cdk import pipelines as pipelines
 from aws_cdk import aws_iam as iam
 from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
+from aws_cdk.aws_codebuild import BuildSpec
 from aws_cdk.aws_codepipeline_actions import GitHubTrigger
 
 
@@ -85,7 +86,18 @@ class PipelineStack(Stack):
                     f'export ENV={target_environment} && cdk synth --verbose'
                 ],
             ),
-
+            cli_version="2",
+            synth_code_build_defaults={
+                "partial_build_spec": BuildSpec.from_object({
+                    "phases": {
+                        "install": {
+                            "runtime-versions": {
+                                "nodejs": "20"
+                            }
+                        }
+                    }
+                })
+            }
         )
         # source_artifact = codepipeline.Artifact()
         # cloud_assembly_artifact = codepipeline.Artifact()
