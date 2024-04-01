@@ -77,79 +77,13 @@ class PipelineStack(Stack):
             pipeline_name=f'{target_environment.lower()}-{resource_name_prefix}-infrastructure-pipeline',
             self_mutation=False,
             cross_account_keys=True,
-            synth=CodeBuildStep(
+            synth=ShellStep(
                 "Synth",
                 input=input,
                 commands=[
                     "npm install -g aws-cdk",
                     "pip3 install -r requirements.txt",
                     f'export ENV={target_environment} && cdk synth --verbose'
-                ],
-                cli_version="2",
-                synth_code_build_defaults={
-                    "partial_build_spec": BuildSpec.from_object({
-                        "version": "0.2",
-                        "phases": {
-                            "install": {
-                                "runtime-versions": {
-                                    "nodejs": "20",
-                                    "python": "3.12"
-                                }
-                            }
-                        }
-                    })
-                },
-                role_policy_statements=[
-                    iam.PolicyStatement(
-                        sid='InfrastructurePipelineSecretsManagerPolicy',
-                        effect=iam.Effect.ALLOW,
-                        actions=[
-                            'secretsmanager:*',
-                        ],
-                        resources=[
-                            f'arn:aws:secretsmanager:{self.region}:{self.account}:secret:/DataLake/*',
-                        ],
-                    ),
-                    iam.PolicyStatement(
-                        sid='InfrastructurePipelineSTSAssumeRolePolicy',
-                        effect=iam.Effect.ALLOW,
-                        actions=[
-                            'sts:AssumeRole',
-                        ],
-                        resources=[
-                            '*',
-                        ],
-                    ),
-                    iam.PolicyStatement(
-                        sid='InfrastructurePipelineKmsPolicy',
-                        effect=iam.Effect.ALLOW,
-                        actions=[
-                            'kms:*',
-                        ],
-                        resources=[
-                            '*',
-                        ],
-                    ),
-                    iam.PolicyStatement(
-                        sid='InfrastructurePipelineVpcPolicy',
-                        effect=iam.Effect.ALLOW,
-                        actions=[
-                            'vpc:*',
-                        ],
-                        resources=[
-                            '*',
-                        ],
-                    ),
-                    iam.PolicyStatement(
-                        sid='InfrastructurePipelineEc2Policy',
-                        effect=iam.Effect.ALLOW,
-                        actions=[
-                            'ec2:*',
-                        ],
-                        resources=[
-                            '*',
-                        ],
-                    ),
                 ]
             ),
         )
