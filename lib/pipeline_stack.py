@@ -75,6 +75,7 @@ class PipelineStack(Stack):
             pipeline_name=f'{target_environment.lower()}-{resource_name_prefix}-infrastructure-pipeline',
             self_mutation=False,
             cross_account_keys=True,
+            cli_version="v2",
             synth=ShellStep(
                 "Synth",
                 input=input,
