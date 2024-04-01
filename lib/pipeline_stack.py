@@ -93,7 +93,7 @@ class PipelineStack(Stack):
                             "install": {
                                 "runtime-versions": {
                                     "nodejs": "20",
-                                    "python": "3.9"
+                                    "python": "3.12"
                                 }
                             }
                         }
