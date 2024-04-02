@@ -6,7 +6,7 @@ from constructs import Construct
 
 from aws_cdk import pipelines as pipelines
 from aws_cdk import aws_iam as iam
-from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep, CodeBuildStep
+from aws_cdk.pipelines import CodePipeline, CodePipelineSource, ShellStep
 from aws_cdk.aws_codebuild import BuildSpec
 from aws_cdk.aws_codepipeline_actions import GitHubTrigger
 
@@ -59,8 +59,6 @@ class PipelineStack(Stack):
 
         repository = self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_OWNER_NAME] + \
             "/" + self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_NAME]
-
-        repository = "Last-Mile-Health/lmd-aws-cdk-pipelines-application-infrastructure"
 
         resource_name_prefix = get_resource_name_prefix()
 
