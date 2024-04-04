@@ -83,16 +83,16 @@ class PipelineStack(cdk.Stack):
                         '*',
                     ],
                 ),
-                iam.PolicyStatement(
-                    sid='InfrustructurePipelineKmsPolicy',
-                    effect=iam.Effect.ALLOW,
-                    actions=[
-                        'kms:*',
-                    ],
-                    resources=[
-                        '*',
-                    ],
-                ),
+                # iam.PolicyStatement(
+                #     sid='InfrustructurePipelineKmsPolicy',
+                #     effect=iam.Effect.ALLOW,
+                #     actions=[
+                #         'kms:*',
+                #     ],
+                #     resources=[
+                #         '*',
+                #     ],
+                # ),
                 iam.PolicyStatement(
                     sid='InfrustructurePipelineVpcPolicy',
                     effect=iam.Effect.ALLOW,
