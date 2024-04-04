@@ -64,7 +64,7 @@ class PipelineStack(cdk.Stack):
             build_environment=code_build_env,
             role_policy=[
                 iam.PolicyStatement(
-                    sid='InfrustructurePipelineSecretsManagerPolicy',
+                    sid='InfrastructurePipelineSecretsManagerPolicy',
                     effect=iam.Effect.ALLOW,
                     actions=[
                         'secretsmanager:*',
@@ -74,7 +74,7 @@ class PipelineStack(cdk.Stack):
                     ],
                 ),
                 iam.PolicyStatement(
-                    sid='InfrustructurePipelineSTSAssumeRolePolicy',
+                    sid='InfrastructurePipelineSTSAssumeRolePolicy',
                     effect=iam.Effect.ALLOW,
                     actions=[
                         'sts:AssumeRole',
@@ -83,18 +83,18 @@ class PipelineStack(cdk.Stack):
                         '*',
                     ],
                 ),
-                # iam.PolicyStatement(
-                #     sid='InfrustructurePipelineKmsPolicy',
-                #     effect=iam.Effect.ALLOW,
-                #     actions=[
-                #         'kms:*',
-                #     ],
-                #     resources=[
-                #         '*',
-                #     ],
-                # ),
                 iam.PolicyStatement(
-                    sid='InfrustructurePipelineVpcPolicy',
+                    sid='InfrastructurePipelineKmsPolicy',
+                    effect=iam.Effect.ALLOW,
+                    actions=[
+                        'kms:*',
+                    ],
+                    resources=[
+                        '*',
+                    ],
+                ),
+                iam.PolicyStatement(
+                    sid='InfrastructurePipelineVpcPolicy',
                     effect=iam.Effect.ALLOW,
                     actions=[
                         'vpc:*',
@@ -104,7 +104,7 @@ class PipelineStack(cdk.Stack):
                     ],
                 ),
                 iam.PolicyStatement(
-                    sid='InfrustructurePipelineEc2Policy',
+                    sid='InfrastructurePipelineEc2Policy',
                     effect=iam.Effect.ALLOW,
                     actions=[
                         'ec2:*',
@@ -121,8 +121,8 @@ class PipelineStack(cdk.Stack):
 
         pipeline = Pipelines.CodePipeline(
             self,
-            f'{target_environment}{logical_id_prefix}InfrustructurePipeline',
-            pipeline_name=f'{target_environment.lower()}-{resource_name_prefix}-infrustructure-pipeline',
+            f'{target_environment}{logical_id_prefix}InfrastructurePipeline',
+            pipeline_name=f'{target_environment.lower()}-{resource_name_prefix}-infrastructure-pipeline',
             code_build_defaults=code_build_opt,
             self_mutation=True,
             synth=Pipelines.ShellStep(
