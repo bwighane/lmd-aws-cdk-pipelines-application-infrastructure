@@ -1,6 +1,6 @@
 from aws_cdk import Stack, SecretValue
 from aws_cdk import aws_codebuild as codebuild
-from aws_cdk import aws_amplify_alpha as amplify_alpha
+from aws_cdk import aws_amplify_alpha as amplify_alpha  # amplify is being updated constantly
 from constructs import Construct
 
 from .configuration import (
