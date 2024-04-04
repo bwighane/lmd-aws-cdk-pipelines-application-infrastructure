@@ -17,7 +17,8 @@ setuptools.setup(
     author="Branford T Gbieor <gbieorbranford@gmail.com>, Bwighane Mwalwanda <bsmwalwanda@gmail.com>",
     packages=setuptools.find_packages(),
     install_requires=[
-        "aws-cdk-lib==2.33.0",
+        "aws-cdk-lib>=2.33.0",
+        "constructs>=10.1.0",
     ],
     python_requires=">=3.9",
     classifiers=[

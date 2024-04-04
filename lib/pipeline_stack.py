@@ -133,7 +133,7 @@ class PipelineStack(cdk.Stack):
                     authentication=cdk.SecretValue.secrets_manager(
                         self.mappings[DEPLOYMENT][GITHUB_TOKEN]
                     ),
-                    trigger=CodePipelineActions.GitHubTrigger.POLL,
+                    trigger=CodePipelineActions.GitHubTrigger.WEBHOOK,
                 ),
                 commands=["npm install -g aws-cdk",
                           "python -m pip install -r requirements.txt",
