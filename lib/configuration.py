@@ -150,10 +150,13 @@ def get_all_configurations() -> dict:
     return {
         DEPLOYMENT: {
             ENVIRONMENT: DEPLOYMENT,
-            GITHUB_TOKEN: '/Applify/GitHubToken',
+            GITHUB_TOKEN: '/DataLake/GitHubToken',
             **get_local_configuration(DEPLOYMENT),
         },
-        DEV: get_environment_configuration(DEV),
+        DEV: {
+            GITHUB_TOKEN: '/Applify/GitHubToken',
+            **get_environment_configuration(DEV)
+        },
         TEST: get_environment_configuration(TEST),
         PROD: get_environment_configuration(PROD),
     }
