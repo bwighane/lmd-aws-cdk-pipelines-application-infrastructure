@@ -35,7 +35,7 @@ COGNITO_CALLBACK_URLS = 'cognito_callback_urls'
 COGNITO_LOGOUT_URLS = 'cognito_logout_urls'
 
 # Secrets Manager Inputs
-GITHUB_TOKEN = 'authentication_token'
+GITHUB_TOKEN = 'github_token'
 DB_USERNAME = 'db_username'
 DB_PASSWORD = 'db_password'
 
@@ -55,6 +55,7 @@ SHARED_SECURITY_GROUP_ID = 'shared_security_group_id'
 S3_KMS_KEY = 's3_kms_key'
 S3_ACCESS_LOG_BUCKET = 's3_access_log_bucket'
 S3_UPLOAD_BUCKET = 's3_upload_bucket'
+
 
 def get_local_configuration(environment: str) -> dict:
     """
