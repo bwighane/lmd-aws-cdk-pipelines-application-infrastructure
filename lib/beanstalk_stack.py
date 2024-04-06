@@ -104,7 +104,8 @@ class BeanstalkStack(Stack):
                     owner=self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_OWNER_NAME],
                     repo=self.mappings[DEPLOYMENT][SERVICE_GITHUB_REPOSITORY_NAME],
                     branch='main',  # hardcoding this for now, it will have to be dynamic to fit other accts.
-                    oauth_token=cdk.SecretValue.secrets_manager(self.mappings[DEPLOYMENT][GITHUB_TOKEN]),
+                    oauth_token=cdk.SecretValue.secrets_manager(
+                        self.mappings[target_environment][GITHUB_TOKEN]),
                     output=source_artifact
                 )
             ]
