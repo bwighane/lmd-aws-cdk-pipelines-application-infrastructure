@@ -18,6 +18,7 @@ GITHUB_REPOSITORY_NAME = 'lmd-aws-cdk-pipelines-application-infrastructure'
 ADMIN_EMAIL = 'lmdadmin@lastmilehealth.org'
 AMPLIFY_GITHUB_REPOSITORY_NAME = 'lmd-portal-UI'
 SERVICE_GITHUB_REPOSITORY_NAME = 'lmd-portal-services'
+AMPLIFY_GITHUB_TOKEN = "token"
 
 ACCOUNT_ID = '829553079673'
 REGION = 'us-east-1'
@@ -154,11 +155,17 @@ def get_all_configurations() -> dict:
             **get_local_configuration(DEPLOYMENT),
         },
         DEV: {
-            GITHUB_TOKEN: '/Applify/GitHubToken',
+            AMPLIFY_GITHUB_TOKEN: '/Applify/GitHubToken',
             **get_environment_configuration(DEV)
         },
-        TEST: get_environment_configuration(TEST),
-        PROD: get_environment_configuration(PROD),
+        TEST: {
+            AMPLIFY_GITHUB_TOKEN: '/Applify/GitHubToken',
+            **get_environment_configuration(TEST)
+        },
+        PROD: {
+            AMPLIFY_GITHUB_TOKEN: '/Applify/GitHubToken',
+            **get_environment_configuration(PROD)
+        },
     }
 
 
