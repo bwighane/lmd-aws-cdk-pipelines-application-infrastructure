@@ -33,40 +33,32 @@ class BeanstalkStack(Stack):
             application_name=f'{target_environment}-portal-services',
         )
 
+        beanstalk_webtier_policy = iam.ManagedPolicy.from_aws_managed_policy_name(
+            "AWSElasticBeanstalkWebTier")
+
+        beanstalk_docker_policy = iam.ManagedPolicy.from_aws_managed_policy_name(
+            "AWSElasticBeanstalkMulticontainerDocker")
+
+        role = iam.Role(self, f"{target_environment}ApplicationBeanstalkServiceRole",
+                        assumed_by=iam.ServicePrincipal("beanstalk.amazonaws.com"),
+                        managed_policies=[beanstalk_webtier_policy, beanstalk_docker_policy])
+
+        role_option_setting = elasticbeanstalk.CfnEnvironment.OptionSettingProperty(
+            namespace="aws:autoscaling:launchconfiguration",
+            option_name=f"{target_environment}ApplicationIamInstanceProfile",
+            value=role.role_name
+        )
         # Create an Elastic Beanstalk environment
         environment = elasticbeanstalk.CfnEnvironment(
             self, f'{id}-portal-services-environment',
             application_name=application.application_name,
             environment_name=f'{target_environment}-portal-services-environment',
             solution_stack_name="64bit Amazon Linux 2023 v4.0.10 running Python 3.9",
+            option_settings=[
+                role_option_setting
+            ]
         )
 
-        # build_spec=codebuild.BuildSpec.from_object({
-        #             "version": "0.2",
-        #             "phases": {
-        #                 "install": {
-        #                     "runtime-versions": {
-        #                         "python": "3.9"
-        #                     },
-        #                     "commands": [
-        #                         "pip install -r requirements.txt"
-        #                     ]
-        #                 },
-        #                 "build": {
-        #                     "commands": [
-        #                         "echo Build started on `date`",
-        #                         "python build.py"
-        #                     ]
-        #                 }
-        #             },
-        #             "artifacts": {
-
-        #                 "files": [
-        #                     "build/**/*"
-        #                 ]
-        #             }
-        #         }),
-        # Create a CodeBuild project
         project = codebuild.PipelineProject(
             self, f'{id}-codebuild',
             build_spec=codebuild.BuildSpec.from_object({
