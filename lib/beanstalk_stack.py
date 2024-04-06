@@ -40,7 +40,7 @@ class BeanstalkStack(Stack):
             "AWSElasticBeanstalkMulticontainerDocker")
 
         role = iam.Role(self, f"{target_environment}ApplicationBeanstalkServiceRole",
-                        assumed_by=iam.ServicePrincipal("beanstalk.amazonaws.com"),
+                        assumed_by=iam.ServicePrincipal("elasticbeanstalk.amazonaws.com"),
                         managed_policies=[beanstalk_webtier_policy, beanstalk_docker_policy])
 
         role_option_setting = elasticbeanstalk.CfnEnvironment.OptionSettingProperty(
