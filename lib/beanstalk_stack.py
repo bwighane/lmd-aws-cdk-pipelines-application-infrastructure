@@ -38,9 +38,34 @@ class BeanstalkStack(Stack):
             self, f'{id}-environment',
             application_name=application.application_name,
             environment_name=f'{target_environment}-environment',
-            solution_stack_name="64bit Amazon Linux 2 v5.4.4 running Python 3.8",
+            solution_stack_name="64bit Amazon Linux 2 v5.4.4 running Python 3.9",
         )
 
+        # build_spec=codebuild.BuildSpec.from_object({
+        #             "version": "0.2",
+        #             "phases": {
+        #                 "install": {
+        #                     "runtime-versions": {
+        #                         "python": "3.9"
+        #                     },
+        #                     "commands": [
+        #                         "pip install -r requirements.txt"
+        #                     ]
+        #                 },
+        #                 "build": {
+        #                     "commands": [
+        #                         "echo Build started on `date`",
+        #                         "python build.py"
+        #                     ]
+        #                 }
+        #             },
+        #             "artifacts": {
+
+        #                 "files": [
+        #                     "build/**/*"
+        #                 ]
+        #             }
+        #         }),
         # Create a CodeBuild project
         project = codebuild.PipelineProject(
             self, f'{id}-codebuild',
@@ -49,22 +74,17 @@ class BeanstalkStack(Stack):
                 "phases": {
                     "install": {
                         "runtime-versions": {
-                            "python": "3.8"
+                            "python": "3.9"
                         },
                         "commands": [
                             "pip install -r requirements.txt"
                         ]
-                    },
-                    "build": {
-                        "commands": [
-                            "echo Build started on `date`",
-                            "python build.py"
-                        ]
                     }
                 },
                 "artifacts": {
+                    "type": "zip",
                     "files": [
-                        "build/**/*"
+                        "**/*"
                     ]
                 }
             }),
@@ -130,7 +150,7 @@ class BeanstalkStack(Stack):
                     action_name="ElasticBeanstalk_Deploy",
                     application_name=application.ref,
                     environment_name=environment.ref,
-                    input=build_stage.actions[0].action_properties.outputs[0]
+                    input=build_stage.actions[0].action_properties.outputs[0],
                 )
             ]
         )
