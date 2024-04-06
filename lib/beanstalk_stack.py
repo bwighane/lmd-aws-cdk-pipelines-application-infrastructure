@@ -49,7 +49,7 @@ class BeanstalkStack(Stack):
         role_option_setting = elasticbeanstalk.CfnEnvironment.OptionSettingProperty(
             namespace="aws:autoscaling:launchconfiguration",
             option_name="IamInstanceProfile",
-            value=role.role_arn
+            value=role.role_name
         )
         # Create an Elastic Beanstalk environment
         environment = elasticbeanstalk.CfnEnvironment(
