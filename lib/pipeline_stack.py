@@ -118,9 +118,7 @@ class PipelineStack(cdk.Stack):
 
         repo = self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_OWNER_NAME] + \
             '/' + self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_NAME]
-        # cdk.SecretValue.secrets_manager(
-        #             self.mappings[DEPLOYMENT][GITHUB_TOKEN]
-        #         )
+
         pipeline = Pipelines.CodePipeline(
             self,
             f'{target_environment}{logical_id_prefix}InfrastructurePipeline',
@@ -139,7 +137,7 @@ class PipelineStack(cdk.Stack):
                 ),
                 commands=["npm install -g aws-cdk",
                           "python -m pip install -r requirements.txt",
-                          "cdk synth"],
+                          f'export ENV={target_environment} && cdk synth --verbose'],
             ),
             cross_account_keys=True
         )
