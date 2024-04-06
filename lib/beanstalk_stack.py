@@ -38,7 +38,7 @@ class BeanstalkStack(Stack):
             self, f'{id}-environment',
             application_name=application.application_name,
             environment_name=f'{target_environment}-environment',
-            solution_stack_name="64bit Amazon Linux 2 v5.4.4 running Python 3.9",
+            solution_stack_name="64bit Amazon Linux 2023 v4.0.10 running Python 3.9",
         )
 
         # build_spec=codebuild.BuildSpec.from_object({
