@@ -39,14 +39,17 @@ class BeanstalkStack(Stack):
         beanstalk_docker_policy = iam.ManagedPolicy.from_aws_managed_policy_name(
             "AWSElasticBeanstalkMulticontainerDocker")
 
+        beanstalk_workertier_policy = iam.ManagedPolicy.from_aws_managed_policy_name(
+            "AWSElasticBeanstalkWorkerTier")
+
         role = iam.Role(self, f"{target_environment}ApplicationBeanstalkServiceRole",
-                        assumed_by=iam.ServicePrincipal("elasticbeanstalk.amazonaws.com"),
-                        managed_policies=[beanstalk_webtier_policy, beanstalk_docker_policy])
+                        assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"),
+                        managed_policies=[beanstalk_webtier_policy, beanstalk_docker_policy, beanstalk_workertier_policy])
 
         role_option_setting = elasticbeanstalk.CfnEnvironment.OptionSettingProperty(
             namespace="aws:autoscaling:launchconfiguration",
             option_name="IamInstanceProfile",
-            value=role.role_name
+            value=role.role_arn
         )
         # Create an Elastic Beanstalk environment
         environment = elasticbeanstalk.CfnEnvironment(
