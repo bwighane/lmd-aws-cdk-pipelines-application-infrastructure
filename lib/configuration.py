@@ -155,15 +155,15 @@ def get_all_configurations() -> dict:
             **get_local_configuration(DEPLOYMENT),
         },
         DEV: {
-            AMPLIFY_GITHUB_TOKEN: '/Applify/GitHubToken',
+            GITHUB_TOKEN: '/DataLake/GitHubToken',
             **get_environment_configuration(DEV)
         },
         TEST: {
-            AMPLIFY_GITHUB_TOKEN: '/Applify/GitHubToken',
+            GITHUB_TOKEN: '/DataLake/GitHubToken',
             **get_environment_configuration(TEST)
         },
         PROD: {
-            AMPLIFY_GITHUB_TOKEN: '/Applify/GitHubToken',
+            GITHUB_TOKEN: '/DataLake/GitHubToken',
             **get_environment_configuration(PROD)
         },
     }
