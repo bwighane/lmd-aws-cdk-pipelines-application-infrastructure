@@ -46,10 +46,17 @@ class BeanstalkStack(Stack):
                         assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"),
                         managed_policies=[beanstalk_webtier_policy, beanstalk_docker_policy, beanstalk_workertier_policy])
 
+        cdk.CfnOutput(self, 'ServiceAccountIamRole', value=role.role_arn)
+
+        instance_profile = iam.InstanceProfile(
+            self, f"{target_environment}InstanceProfile",
+            role=role,
+            instance_profile_name=f"application-instance-profile"
+        )
         role_option_setting = elasticbeanstalk.CfnEnvironment.OptionSettingProperty(
             namespace="aws:autoscaling:launchconfiguration",
             option_name="IamInstanceProfile",
-            value=role.role_name
+            value=instance_profile.instance_profile_arn
         )
         # Create an Elastic Beanstalk environment
         environment = elasticbeanstalk.CfnEnvironment(
