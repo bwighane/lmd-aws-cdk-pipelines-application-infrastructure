@@ -29,15 +29,15 @@ class BeanstalkStack(Stack):
 
         # Create an Elastic Beanstalk application
         application = elasticbeanstalk.CfnApplication(
-            self, f'{id}-application',
-            application_name=f'{target_environment}-application',
+            self, f'{id}-portal-services',
+            application_name=f'{target_environment}-portal-services',
         )
 
         # Create an Elastic Beanstalk environment
         environment = elasticbeanstalk.CfnEnvironment(
-            self, f'{id}-environment',
+            self, f'{id}-portal-services-environment',
             application_name=application.application_name,
-            environment_name=f'{target_environment}-environment',
+            environment_name=f'{target_environment}-portal-services-environment',
             solution_stack_name="64bit Amazon Linux 2023 v4.0.10 running Python 3.9",
         )
 
