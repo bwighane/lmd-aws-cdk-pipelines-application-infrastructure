@@ -5,6 +5,7 @@ from constructs import Construct
 
 from .configuration import (
     DEPLOYMENT,
+    DEV,
     AMPLIFY_GITHUB_REPOSITORY_NAME,
     GITHUB_REPOSITORY_OWNER_NAME,
     GITHUB_TOKEN,
@@ -28,7 +29,7 @@ class AmplifyStack(Stack):
                 owner=self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_OWNER_NAME],
                 repository=self.mappings[DEPLOYMENT][AMPLIFY_GITHUB_REPOSITORY_NAME],
                 oauth_token=SecretValue.secrets_manager(
-                    self.mappings[DEPLOYMENT][GITHUB_TOKEN]
+                    self.mappings[DEV][GITHUB_TOKEN]
                 ),
             ),
             build_spec=codebuild.BuildSpec.from_object_to_yaml(
