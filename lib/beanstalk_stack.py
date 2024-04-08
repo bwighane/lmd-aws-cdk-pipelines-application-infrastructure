@@ -58,6 +58,49 @@ class BeanstalkStack(Stack):
             option_name="IamInstanceProfile",
             value=instance_profile.instance_profile_arn
         )
+
+        def _option_to_property(option):
+            return elasticbeanstalk.CfnEnvironment.OptionSettingProperty(
+                namespace=option['namespace'], option_name=option['name'], value=option['value'])
+
+        rolling_update_settings = [_option_to_property(x) for x in [
+            {
+                "namespace": "aws:elasticbeanstalk:command",
+                "name": "DeploymentPolicy",
+                "value": "Rolling",
+            },
+            {
+                "namespace": "aws:elasticbeanstalk:command",
+                "name": "BatchSizeType",
+                "value": "Percentage",
+            },
+            {
+                "namespace": "aws:elasticbeanstalk:command",
+                "name": "BatchSize",
+                "value": "30",  # Update 30 % of the instances at a time.
+            },
+            {
+                "namespace": "aws:elasticbeanstalk:command",
+                "name": "IgnoreHealthCheck",
+                "value": "false",  # Use health check status.
+            },
+            {
+                "namespace": "aws:elasticbeanstalk:command",
+                "name": "RollingUpdateEnabled",
+                "value": "true",  # Enable rolling updates.
+            },
+            {
+                "namespace": "aws:elasticbeanstalk:command",
+                "name": "RollingUpdateType",
+                "value": "Time",  # Wait for a pause time before moving the next batch.
+            },
+            {
+                "namespace": "aws:elasticbeanstalk:command",
+                "name": "PauseTime",
+                "value": "PT5M",  # Pause for 5 minutes between batches.
+            },
+        ]
+        ]
         # Create an Elastic Beanstalk environment
         environment = elasticbeanstalk.CfnEnvironment(
             self, f'{id}-portal-services-environment',
@@ -65,7 +108,8 @@ class BeanstalkStack(Stack):
             environment_name=f'{target_environment}-portal-services-environment',
             solution_stack_name="64bit Amazon Linux 2023 v4.0.10 running Python 3.9",
             option_settings=[
-                role_option_setting
+                role_option_setting,
+                *rolling_update_settings
             ]
         )
 

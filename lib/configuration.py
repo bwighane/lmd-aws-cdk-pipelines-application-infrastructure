@@ -80,21 +80,25 @@ def get_local_configuration(environment: str) -> dict:
             RESOURCE_NAME_PREFIX: 'lmd-application',
             COGNITO_CALLBACK_URLS: 'https://main.d1gfzcw5a606s8.amplifyapp.com/',
             COGNITO_LOGOUT_URLS: 'https://main.d1gfzcw5a606s8.amplifyapp.com/auth/sign-in',
+            AMPLIFY_GITHUB_TOKEN: "/Applify/GitHubToken"
         },
         DEV: {
             ACCOUNT_ID: '002190277880',
             REGION: 'us-east-1',
-            VPC_CIDR: '10.20.0.0/24'
+            VPC_CIDR: '10.20.0.0/24',
+            AMPLIFY_GITHUB_TOKEN: "/Applify/GitHubToken"
         },
         TEST: {
             ACCOUNT_ID: '576140831944',
             REGION: 'us-east-1',
-            VPC_CIDR: '10.10.0.0/24'
+            VPC_CIDR: '10.10.0.0/24',
+            AMPLIFY_GITHUB_TOKEN: "/Applify/GitHubToken"
         },
         PROD: {
             ACCOUNT_ID: '301323023124',
             REGION: 'us-east-1',
-            VPC_CIDR: '10.0.0.0/24'
+            VPC_CIDR: '10.0.0.0/24',
+            AMPLIFY_GITHUB_TOKEN: "/Applify/GitHubToken"
         }
     }
 
@@ -152,19 +156,23 @@ def get_all_configurations() -> dict:
         DEPLOYMENT: {
             ENVIRONMENT: DEPLOYMENT,
             GITHUB_TOKEN: '/DataLake/GitHubToken',
+            AMPLIFY_GITHUB_TOKEN: "/Applify/GitHubToken",
             **get_local_configuration(DEPLOYMENT),
         },
         DEV: {
             GITHUB_TOKEN: '/DataLake/GitHubToken',
-            **get_environment_configuration(DEV)
+            AMPLIFY_GITHUB_TOKEN: "/Applify/GitHubToken",
+            ** get_environment_configuration(DEV)
         },
         TEST: {
             GITHUB_TOKEN: '/DataLake/GitHubToken',
-            **get_environment_configuration(TEST)
+            AMPLIFY_GITHUB_TOKEN: "/Applify/GitHubToken",
+            ** get_environment_configuration(TEST)
         },
         PROD: {
             GITHUB_TOKEN: '/DataLake/GitHubToken',
-            **get_environment_configuration(PROD)
+            AMPLIFY_GITHUB_TOKEN: "/Applify/GitHubToken",
+            ** get_environment_configuration(PROD)
         },
     }
 
