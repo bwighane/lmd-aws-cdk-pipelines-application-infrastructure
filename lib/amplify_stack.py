@@ -28,7 +28,7 @@ class AmplifyStack(Stack):
                 owner=self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_OWNER_NAME],
                 repository=self.mappings[DEPLOYMENT][AMPLIFY_GITHUB_REPOSITORY_NAME],
                 oauth_token=SecretValue.secrets_manager(
-                    self.mappings[target_environment][AMPLIFY_GITHUB_TOKEN]  # expected behavior
+                    self.mappings[target_environment][AMPLIFY_GITHUB_TOKEN]
                 ),
             ),
             build_spec=codebuild.BuildSpec.from_object_to_yaml(
