@@ -24,6 +24,7 @@ class AmplifyStack(Stack):
         amplify_app = amplify_alpha.App(
             self,
             f"{target_environment}-app",
+            platform=amplify_alpha.Platform.WEB_COMPUTE,
             source_code_provider=amplify_alpha.GitHubSourceCodeProvider(
                 owner=self.mappings[DEPLOYMENT][GITHUB_REPOSITORY_OWNER_NAME],
                 repository=self.mappings[DEPLOYMENT][AMPLIFY_GITHUB_REPOSITORY_NAME],
