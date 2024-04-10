@@ -46,8 +46,4 @@ class AmplifyStack(Stack):
                     },
                 }
             ),
-            platform=amplify_alpha.Platform.WEB_COMPUTE
-
-
-
         )
