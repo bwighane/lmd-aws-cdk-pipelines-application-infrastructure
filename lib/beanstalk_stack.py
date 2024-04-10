@@ -99,6 +99,36 @@ class BeanstalkStack(Stack):
                 "name": "PauseTime",
                 "value": "PT5M",  # Pause for 5 minutes between batches.
             },
+            {
+                "namespace": "aws:elasticbeanstalk:application:environment",
+                "name": "DB_USERNAME",
+                "value": "username",  # Pause for 5 minutes between batches.
+            },
+            {
+                "namespace": "aws:elasticbeanstalk:application:environment",
+                "name": "DB_PASS",
+                "value": "pass",  # Pause for 5 minutes between batches.
+            },
+            {
+                "namespace": "aws:elasticbeanstalk:application:environment",
+                "name": "DB_HOST",
+                "value": "host",  # Pause for 5 minutes between batches.
+            },
+            {
+                "namespace": "aws:elasticbeanstalk:application:environment",
+                "name": "DB_NAME",
+                "value": "name",  # Pause for 5 minutes between batches.
+            },
+            {
+                "namespace": "aws:elasticbeanstalk:application:environment",
+                "name": "DB_PORT",
+                "value": "port",  # Pause for 5 minutes between batches.
+            },
+            {
+                "namespace": "aws:elasticbeanstalk:application:environment",
+                "name": "DB_ENGINE",
+                "value": "engine",  # Pause for 5 minutes between batches.
+            },
         ]
         ]
         # Create an Elastic Beanstalk environment
@@ -110,7 +140,7 @@ class BeanstalkStack(Stack):
             option_settings=[
                 role_option_setting,
                 *rolling_update_settings
-            ]
+            ],
         )
 
         project = codebuild.PipelineProject(
