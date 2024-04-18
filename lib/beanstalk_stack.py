@@ -115,33 +115,39 @@ class BeanstalkStack(Stack):
             {
                 "namespace": "aws:elasticbeanstalk:application:environment",
                 "name": "DB_USERNAME",
-                "value": "username",  # Pause for 5 minutes between batches.
+                "value": "username",
             },
             {
                 "namespace": "aws:elasticbeanstalk:application:environment",
                 "name": "DB_PASS",
-                "value": "pass",  # Pause for 5 minutes between batches.
+                "value": "pass",
             },
             {
                 "namespace": "aws:elasticbeanstalk:application:environment",
                 "name": "DB_HOST",
-                "value": "host",  # Pause for 5 minutes between batches.
+                "value": "host",
             },
             {
                 "namespace": "aws:elasticbeanstalk:application:environment",
                 "name": "DB_NAME",
-                "value": "name",  # Pause for 5 minutes between batches.
+                "value": "name",
             },
             {
                 "namespace": "aws:elasticbeanstalk:application:environment",
                 "name": "DB_PORT",
-                "value": "port",  # Pause for 5 minutes between batches.
+                "value": "port",
             },
             {
                 "namespace": "aws:elasticbeanstalk:application:environment",
                 "name": "DB_ENGINE",
-                "value": "engine",  # Pause for 5 minutes between batches.
+                "value": "engine",
             },
+            {
+                "namespace": "aws:elasticbeanstalk:application:environment",
+                "name": "S3_UPLOAD_BUCKET",
+                "value": "url",
+            },
+
         ]
         ]
         # Create an Elastic Beanstalk environment
