@@ -42,8 +42,21 @@ class BeanstalkStack(Stack):
         beanstalk_workertier_policy = iam.ManagedPolicy.from_aws_managed_policy_name(
             "AWSElasticBeanstalkWorkerTier")
 
+        s3_access_policy_statement = iam.PolicyStatement(
+            effect=iam.Effect.ALLOW,
+            resources=['arn:aws:s3:::*'],
+            actions=["s3:PutObject",
+                     "s3:GetObject"]
+        )
+
+        s3_access_policy_document = iam.PolicyDocument(
+            statements=[s3_access_policy_statement]
+        )
+
         role = iam.Role(self, f"{target_environment}ApplicationBeanstalkServiceRole",
                         assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"),
+                        inline_policies={
+                            "AllowS3Access": s3_access_policy_document},
                         managed_policies=[beanstalk_webtier_policy, beanstalk_docker_policy, beanstalk_workertier_policy])
 
         cdk.CfnOutput(self, 'ServiceAccountIamRole', value=role.role_arn)
