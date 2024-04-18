@@ -49,8 +49,15 @@ class BeanstalkStack(Stack):
                      "s3:GetObject"]
         )
 
+        kms_access_policy_statement = iam.PolicyStatement(
+            effect=iam.Effect.ALLOW,
+            resources=['*'],
+            actions=["kms:GenerateDataKey",
+                     "kms:Decrypt"]
+        )
+
         s3_access_policy_document = iam.PolicyDocument(
-            statements=[s3_access_policy_statement]
+            statements=[s3_access_policy_statement, kms_access_policy_statement]
         )
 
         role = iam.Role(self, f"{target_environment}ApplicationBeanstalkServiceRole",
