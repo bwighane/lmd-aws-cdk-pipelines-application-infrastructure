@@ -171,7 +171,6 @@ class BeanstalkStack(Stack):
                     }
                 },
                 "artifacts": {
-                    "type": "zip",
                     "files": [
                         "**/*"
                     ]
