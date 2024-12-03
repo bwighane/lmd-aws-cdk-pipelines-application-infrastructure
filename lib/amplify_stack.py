@@ -49,23 +49,21 @@ class AmplifyStack(Stack):
                     },
                 }
             ),
-            
+
         )
 
         if target_environment == DEV:
             main_branch = amplify_app.add_branch(
                 "main",
                 auto_build=True,
-                stage="development",
                 branch_name="main",
                 pull_request_preview=False,
             )
-            
+
         elif target_environment == PROD:
             prod_branch = amplify_app.add_branch(
                 "prod",
                 auto_build=True,
-                stage="production",
                 branch_name="prod",
                 pull_request_preview=False,
             )
@@ -76,12 +74,10 @@ class AmplifyStack(Stack):
             value=amplify_app.app_id,
             description="Amplify App ID",
         )
-        
+
         CfnOutput(
             self,
             f"{target_environment}-amplify-app-url",
             value=amplify_app.default_domain,
             description="Amplify App URL",
         )
-      
-
