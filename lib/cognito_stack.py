@@ -21,7 +21,7 @@ class CognitoStack(Stack):
         super().__init__(scope, id, **kwargs)
 
         user_pool = cognito.UserPool(
-            self, 
+            self,
             f'{id}-user-pool',
             user_pool_name=f'{target_environment}-user-pool',
             self_sign_up_enabled=True,
@@ -63,7 +63,7 @@ class CognitoStack(Stack):
         google_client_secret = secretsmanager.Secret.from_secret_name_v2(
             self,
             'GoogleClientSecret',
-            'google-oauth-client-secret' 
+            'google-oauth-client-secret'
         ).secret_value.unsafe_unwrap()
 
         # Add Google as Id and map attributes
@@ -80,6 +80,7 @@ class CognitoStack(Stack):
                 'profile',
                 'aws.cognito.signin.user.admin'
             ],
+
             attribute_mapping=cognito.AttributeMapping(
                 email=cognito.ProviderAttribute.GOOGLE_EMAIL,
             )
@@ -114,7 +115,7 @@ class CognitoStack(Stack):
                 callback_urls=[
                     'http://localhost:3000/api/auth/callback/cognito',
                     'https://main.d1gfzcw5a606s8.amplifyapp.com/api/auth/callback/cognito'
-                   
+
                 ],
                 logout_urls=[
                     'http://localhost:3000',
@@ -133,14 +134,14 @@ class CognitoStack(Stack):
             value=user_pool.user_pool_id,
             description='Cognito User Pool ID'
         )
-        
+
         CfnOutput(
             self,
             'UserPoolClientId',
             value=user_pool_client.user_pool_client_id,
             description='Cognito User Pool Client ID'
         )
-        
+
         CfnOutput(
             self,
             'CognitoDomain',
