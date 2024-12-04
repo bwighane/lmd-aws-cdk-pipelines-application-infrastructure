@@ -63,7 +63,7 @@ class CognitoStack(Stack):
         google_client_secret = secretsmanager.Secret.from_secret_name_v2(
             self,
             'GoogleClientSecret',
-            'google-oauth-token'
+            'google-oauth-client-secret'
         ).secret_value.unsafe_unwrap()
 
         # Add Google as Id and map attributes
