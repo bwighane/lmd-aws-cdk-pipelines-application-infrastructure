@@ -112,6 +112,14 @@ class PipelineStack(cdk.Stack):
                     resources=[
                         '*',
                     ],
+                ),
+                iam.PolicyStatement(
+                    effect=iam.Effect.ALLOW,
+                    actions=[
+                        "secretsmanager:ListSecrets",
+                        "secretsmanager:GetSecretValue"
+                    ],
+                    resources=["*"]
                 )
             ]
         )
