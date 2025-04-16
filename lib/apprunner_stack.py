@@ -4,10 +4,8 @@ from aws_cdk import (
     CfnOutput
 )
 import aws_cdk.aws_apprunner_alpha as apprunner
-
 from constructs import Construct
-
-from .configuration import GITHUB_REPOSITORY_NAME, GITHUB_REPOSITORY_OWNER_NAME
+from .configuration import SERVICE_GITHUB_REPOSITORY_NAME, GITHUB_REPOSITORY_OWNER_NAME
 
 
 class AppRunnerStack(Stack):
@@ -24,7 +22,11 @@ class AppRunnerStack(Stack):
 
         # Add permissions to the role as needed
         instance_role.add_managed_policy(
-            iam.ManagedPolicy.from_aws_managed_policy_name("AWSAppRunnerServicePolicyForECRAccess")
+            iam.ManagedPolicy.from_managed_policy_arn(
+                self,
+                "ECRAccess",
+                "arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess"
+            )
         )
 
         # Create an IAM policy for Secrets Manager access
@@ -70,7 +72,8 @@ class AppRunnerStack(Stack):
 
             # Configure the source with runtime configuration
             source=apprunner.Source.from_git_hub(
-                repository_url=f"{GITHUB_REPOSITORY_OWNER_NAME}/{GITHUB_REPOSITORY_NAME}",  # Replace with your repo
+                # Replace with your repo
+                repository_url=f"https://github.com/{GITHUB_REPOSITORY_OWNER_NAME}/{SERVICE_GITHUB_REPOSITORY_NAME}",
                 branch=branch,  # Specify your branch
                 configuration_source=apprunner.ConfigurationSourceType.API,
                 code_configuration_values=runtime_config,

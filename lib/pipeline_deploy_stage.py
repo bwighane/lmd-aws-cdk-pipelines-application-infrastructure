@@ -7,6 +7,8 @@ from .cognito_stack import CognitoStack
 from .beanstalk_stack import BeanstalkStack
 from .apprunner_stack import AppRunnerStack
 
+from .dynamodb_stack import DynamoDBStack
+
 
 class PipelineDeployStage(Stage):
     def __init__(self, scope: Construct, construct_id: str, target_environment: str, **kwargs):
@@ -53,8 +55,16 @@ class PipelineDeployStage(Stage):
             **kwargs,
         )
 
+        useage_analytics_dynamodb_stack = DynamoDBStack(
+            self,
+            f"{target_environment}-portal-ui-useage-events",
+            target_environment=target_environment,
+            **kwargs,
+        )
+
         # Tag the backend_service and amplify_stack with the target_environment
         tag(amplify_stack, target_environment)
         tag(cognito_stack, target_environment)
         tag(beanstalk_stack, target_environment)
         tag(app_runner_stack, target_environment)
+        tag(useage_analytics_dynamodb_stack, target_environment)
